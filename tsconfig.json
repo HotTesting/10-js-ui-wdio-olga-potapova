@@ -1,0 +1,5 @@
+{
+    "compilerOptions": {
+      "types": ["node", "webdriverio/sync", "@wdio/mocha-framework", "expect-webdriverio"]
+    }
+}
