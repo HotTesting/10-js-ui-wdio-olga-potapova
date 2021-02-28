@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Seed project for 10-js-ui-wdio",
   "scripts": {
-    "test":"wdio wdio.conf.ts"
+    "test": "wdio wdio.conf.ts"
   },
   "repository": {
     "type": "git",
