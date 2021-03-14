@@ -27,8 +27,12 @@ const products = [
 
 const register = () => {
     browser.url('/index.php?route=account/register');
-    browser.pause(2000);
     const content = $('#content');
+    const continueButton = content.$('input[type="submit"][value="Continue"]');
+    expect(continueButton).toBeDisplayed({
+        wait: 5000,
+        message: 'Continue button isn\'t shown on the page'
+    })
     const firstName = content.$('#input-firstname');
     firstName.setValue('Test');
     const lastName = content.$('#input-lastname');
@@ -43,17 +47,36 @@ const register = () => {
     passwordConfirm.setValue('2222');
     const policy = content.$('input[type="checkbox"][name="agree"]');
     policy.click();
-    const continueButton = content.$('input[type="submit"][value="Continue"]');
     continueButton.click();
     const heading = content.$('h1');
     expect(heading).toHaveText('Your Account Has Been Created!');
 }
 
-before(function(){
+/*after clicking 'Comparison' page scrolls up to successful message so that click to product
+in next forEach iteration can be misplaced (product details will be open instead), so that 
+test should wait for page stopped scrolling before clicking the next product*/
+/*in real project I would place it into some wait helper, now saved here just to make homework
+check easier*/
+const waitForPageStopScrolling = function (totalCount, timeout, currentCount = 0) {
+    if (currentCount < totalCount) {
+        let startPageYOffset = browser.execute('return window.pageYOffset');
+        browser.pause(timeout);
+        let finPageYOffset = browser.execute('return window.pageYOffset');
+        if (startPageYOffset == finPageYOffset) {
+            return;
+        } else {
+            waitForPageStopScrolling(totalCount, timeout, ++currentCount);
+        }
+    } else {
+        throw 'Page hasn\'t stop scrolling in more than ' + totalCount;
+    }
+}
+
+before(function () {
     browser.maximizeWindow();
 });
 
-beforeEach(function() {
+beforeEach(function () {
     browser.deleteCookies();
 })
 
@@ -61,146 +84,195 @@ describe('Items', function () {
     it('can be added to wishlist', function () {
         register();
         browser.url('/mp3-players');
-        browser.pause(3000);
         const content = $('#content');
-        
-        const item = 'iPod Classic';
-        const itemContainers = content.$$('div.product-grid');
-        const [ itemToAdd ] = itemContainers.filter(el => el.$('h4').getText() === item);
-
-        const addToWishListButton = itemToAdd.$('i.fa-heart');
-        addToWishListButton.click();
-        browser.pause(500);
-
+        const heading = content.$('h2');
+        expect(heading).toHaveText('MP3 Players', {
+            wait: 5000,
+            message: 'No products are shown on the page'
+        })
         const successfullMessage = $('div.alert-success');
-        expect(successfullMessage).toHaveTextContaining('Success: You have added', {
-            wait: 3000,
+
+        products.forEach(product => {
+            const itemContainers = content.$$('div.product-grid');
+            const [itemToAdd] = itemContainers.filter(el => el.$('h4').getText() === product.name);
+
+            const addToWishListButton = itemToAdd.$('i.fa-heart');
+            addToWishListButton.click();
+            expect(successfullMessage).toHaveTextContaining('Success: You have added', {
+                wait: 3000,
+                message: 'No successful message is shown'
+            });
+            waitForPageStopScrolling(/*up to*/20/*times*/, 100/*milliseconds*/);
+        });
+
+        const wishListLink = successfullMessage.$('a[href*="wishlist"]');
+        expect(wishListLink).toHaveTextContaining('wish list', {
+            wait: 5000,
             message: 'No successful message is shown'
         });
+        wishListLink.click();
+        const elementsInWishList = content.$$('tbody tr');
+        expect(elementsInWishList.length).toEqual(4);
+        //there is a bug! on automated testing mode it opens guest prices (122 instead of 100), login is saved though
+        expect(elementsInWishList.map(row => row.$('div.price').getText())).toEqual(products.map(product => product.price));
     })
 
-    //make a test for each product
-    products.map(product => {
-        it('can be selected for comparison by registered user', function () {
-            register();
-            browser.url('/mp3-players');
-            browser.pause(500);
-
-            const content = $('#content');
-            const successfullMessage = $('div.alert-success');
-
-            const itemContainers = content.$$('div.product-grid');
-            const [itemToAdd] = itemContainers.filter(el => el.$('h4').getText() === product.name);
-            const addToComparisonButton = itemToAdd.$('i.fa-exchange');
-            addToComparisonButton.click();
-            browser.pause(500);
-            expect(successfullMessage).toHaveTextContaining('Success: You have added', {
-                wait: 3000,
-                message: 'No successful message is shown'
-            });
-
-            const comparisonLink = successfullMessage.$('a[href*="compare"]');
-            //to do: go to comparison and check parameters
-        })
-
-        it('can be selected for comparison by guest', function () {
-            browser.url('/mp3-players');
-            browser.pause(3000);
-            const content = $('#content');
-            const successfullMessage = $('div.alert-success');
-
-            const itemContainers = content.$$('div.product-grid');
-            const [itemToAdd] = itemContainers.filter(el => el.$('h4').getText() === product.name);
-            const addToComparisonButton = itemToAdd.$('i.fa-exchange');
-            addToComparisonButton.click();
-            browser.pause(500);
-            expect(successfullMessage).toHaveTextContaining('Success: You have added', {
-                wait: 3000,
-                message: 'No successful message is shown'
-            });
-
-            const comparisonLink = successfullMessage.$('a[href*="compare"]');
-            //to do: go to comparison and check parameters
-        })
-    })
-
-    //iterate objects inside of test
-    it('can be added to cart by guest', function () {
+    //iterate objects in test
+    it('can be selected for comparison by registered user', function () {
+        register();
         browser.url('/mp3-players');
-        browser.pause(3000);
-
-        const myAccount = $('#top a.dropdown-toggle');
-        myAccount.click();
-        const login = $('#top li a[href*=login]')
-        expect(login).toBeDisplayed({
-            wait: 3000,
-            message: 'User IS logged in the shop as login link is not shown'
-        });
-
         const content = $('#content');
+        const heading = content.$('h2');
+        expect(heading).toHaveText('MP3 Players', {
+            wait: 5000,
+            message: 'No products are shown on the page'
+        })
+        const successfullMessage = $('div.alert-success');
+
+        products.forEach(product => {
+            const itemContainers = content.$$('div.product-grid');
+            const [itemToAdd] = itemContainers.filter(el => el.$('h4').getText() === product.name);
+            const addToComparisonButton = itemToAdd.$('i.fa-exchange');
+            addToComparisonButton.click();
+            browser.pause(500);
+            expect(successfullMessage).toHaveTextContaining('Success: You have added', {
+                wait: 3000,
+                message: 'No successful message is shown'
+            });
+            waitForPageStopScrolling(/*up to*/20/*times*/, 50/*milliseconds*/);
+        })
+
+        const comparisonLink = successfullMessage.$('a[href*="compare"]');
+        expect(comparisonLink).toHaveTextContaining('product comparison', {
+            wait: 5000,
+            message: 'No successful message is shown'
+        });
+        comparisonLink.click();
+        const elementsInComparison = content.$$('tbody tr td img');
+        expect(elementsInComparison.length).toEqual(4);
+
+        const comparisonTableRows = content.$$('tbody tr');
+        const [priceRows] = comparisonTableRows.filter(row => row.$('td:first-of-type').getText() == 'Price');
+        const priceValues = priceRows.$$('td').map(row => row.getText());
+        //there is a bug! on automated testing mode it opens guest prices (122 instead of 100), login is saved though
+        expect(priceValues).toEqual(['Price', ...products.map(product => product.price)]);
+    })
+
+    it('can be selected for comparison by guest', function () {
+        browser.url('/mp3-players');
+        const content = $('#content');
+        const heading = content.$('h2');
+        expect(heading).toHaveText('MP3 Players', {
+            wait: 5000,
+            message: 'No products are shown on the page'
+        })
+        const successfullMessage = $('div.alert-success');
+
+        products.forEach(product => {
+            const itemContainers = content.$$('div.product-grid');
+            const [itemToAdd] = itemContainers.filter(el => el.$('h4').getText() === product.name);
+            const addToComparisonButton = itemToAdd.$('i.fa-exchange');
+            addToComparisonButton.click();
+            browser.pause(500);
+            expect(successfullMessage).toHaveTextContaining('Success: You have added', {
+                wait: 3000,
+                message: 'No successful message is shown'
+            });
+            waitForPageStopScrolling(/*up to*/20/*times*/, 50/*milliseconds*/);
+        })
+
+        const comparisonLink = successfullMessage.$('a[href*="compare"]');
+        expect(comparisonLink).toHaveTextContaining('product comparison', {
+            wait: 5000,
+            message: 'No successful message is shown'
+        });
+        comparisonLink.click();
+        const elementsInComparison = content.$$('tbody tr td img');
+        expect(elementsInComparison.length).toEqual(4);
+
+        const comparisonTableRows = content.$$('tbody tr');
+        const [priceRows] = comparisonTableRows.filter(row => row.$('td:first-of-type').getText() == 'Price');
+        const priceValues = priceRows.$$('td').map(row => row.getText());
+        expect(priceValues).toEqual(['Price', ...products.map(product => product.guestPrice)]);
+    })
+
+    //perform single test for each item
+    products.forEach(product => it('can be added to cart by guest', function () {
+        browser.url('/mp3-players');
+        const content = $('#content');
+        const heading = content.$('h2');
+        expect(heading).toHaveText('MP3 Players', {
+            wait: 5000,
+            message: 'No products are shown on the page'
+        })
         const successfullMessage = $('div.alert-success');
 
         //add all four mp3 players to card
-        products.forEach(item => {
-            const itemContainers = content.$$('div.product-grid');
-            const [ itemToAdd ] = itemContainers.filter(el => el.$('h4').getText() === item.name);
-    
-            const addToCartButton = itemToAdd.$('i.fa-shopping-cart');
-            addToCartButton.click();
-            browser.pause(500);
-    
-            expect(successfullMessage).toHaveTextContaining('Success: You have added', {
-                wait: 3000,
-                message: 'No successful message is shown'
-            });
-        })
-        
+        const itemContainers = content.$$('div.product-grid');
+        const [itemToAdd] = itemContainers.filter(el => el.$('h4').getText() === 'iPod Classic');
+
+        const addToCartButton = itemToAdd.$('i.fa-shopping-cart');
+        addToCartButton.click();
+        expect(successfullMessage).toHaveTextContaining('Success: You have added', {
+            wait: 5000,
+            message: 'No successful message is shown'
+        });
+        waitForPageStopScrolling(/*up to*/20/*times*/, 50/*milliseconds*/);
+
         //open cart
         const cartLink = successfullMessage.$('a[href*="cart"]');
         cartLink.click();
-        browser.pause(500);
-
-        //check that 4 items are added 
-        const elementsInCart = content.$$('div.table-responsive tbody tr');
-        expect(elementsInCart.length).toEqual(4);
-
-        //check that correct parameters are shown
-        elementsInCart.forEach(el => {
-            let quantity = el.$('input[name*=quantity]');
-            expect(quantity.getValue()).toBe('1');
+        const elementInCart = content.$('div.table-responsive tbody tr');
+        expect(elementInCart).toBeDisplayed({
+            wait: 5000,
+            message: 'There are no products in the cart'
         })
-    })
 
-     //iterate objects inside of test
-    it('can be added to cart by registered user', function () {
+        let quantity = elementInCart.$('input[name*=quantity]');
+        expect(quantity.getAttribute('value')).toBe('1');
+        
+        let price = elementInCart.$('.//td[5]');
+        expect(price.getText()).toEqual('$122.00');
+    })
+    );
+
+
+    //iterate objects inside of test
+    products.map(product => it('can be added to cart by registered user', function () {
         register();
         const content = $('#content');
         browser.url('/mp3-players');
-        browser.pause(3000);
+        const heading = content.$('h2');
+        expect(heading).toHaveText('MP3 Players', {
+            wait: 5000,
+            message: 'No products are shown on the page'
+        })
 
         const successfullMessage = $('div.alert-success');
-        products.forEach(item => {
-            const itemContainers = content.$$('div.product-grid');
-            const [ itemToAdd ] = itemContainers.filter(el => el.$('h4').getText() === item.name);
-    
-            const addToCartButton = itemToAdd.$('i.fa-shopping-cart');
-            addToCartButton.click();
-            browser.pause(500);
-            expect(successfullMessage).toHaveTextContaining('Success: You have added', {
-                wait: 3000,
-                message: 'No successful message is shown'
-            });
-        })
-        
+        const itemContainers = content.$$('div.product-grid');
+        const [itemToAdd] = itemContainers.filter(el => el.$('h4').getText() === product.name);
+
+        const addToCartButton = itemToAdd.$('i.fa-shopping-cart');
+        addToCartButton.click();
+        expect(successfullMessage).toHaveTextContaining('Success: You have added', {
+            wait: 5000,
+            message: 'No successful message is shown'
+        });
+        waitForPageStopScrolling(/*up to*/20/*times*/, 50/*milliseconds*/);
+
         const cartLink = successfullMessage.$('a[href*="cart"]');
         cartLink.click();
-        browser.pause(3000);
-        const elementsInCart = content.$$('div.table-responsive tbody tr');
-        expect(elementsInCart.length).toEqual(4);
-
-        elementsInCart.forEach(el => {
-            let quantity = el.$('input[name*=quantity]');
-            expect(quantity.getValue()).toBe('1');
+        const elementInCart = content.$('div.table-responsive tbody tr');
+        expect(elementInCart).toBeDisplayed({
+            wait: 5000,
+            message: 'There are no products in the cart'
         })
-    })
+
+        let quantity = elementInCart.$('input[name*=quantity]');
+        expect(quantity.getAttribute('value')).toBe('1');
+        
+        let price = elementInCart.$('.//td[5]');
+        expect(price.getText()).toEqual('$122.00');
+        })
+    );
 })
