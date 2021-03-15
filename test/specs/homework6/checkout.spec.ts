@@ -1,44 +1,44 @@
-import { ConfirmationPage } from "../../../application/pages/checkout/confirmation.page";
-import { CheckoutPage } from "../../../application/pages/checkout/index";
-import { ProductCategoryPage } from "../../../application/pages/productCategory.page";
+import { App } from "../../../application/application"
 
-describe('item', function () {
+describe('Item', function () {
+
     it('can be purchased', function () {
-        const categoryPage = new ProductCategoryPage();
-        categoryPage.open('/mp3-players');
-        const iPodShuffle = categoryPage.products.find(product => product.title() == 'iPod Shuffle');
-        expect(iPodShuffle).toBeDefined();
+        const app = new App()
 
-        iPodShuffle.addToCart();
+        app.home.openAllForCategory('MP3 Players')
 
-        const checkoutPage = new CheckoutPage();
+        const iPodShuffle = app.productCategory.products.find(product => product.title() === 'iPod Shuffle')
+        expect(iPodShuffle).toBeDefined()
 
-        checkoutPage.open();
-        
-        checkoutPage.checkoutOptions.selectGuestCheckout();
-        checkoutPage.checkoutOptions.continue();
+        iPodShuffle.addToCart()
 
-        checkoutPage.billingDetails.fillBillingDetails({
+        app.productCategory.topLinks.openCheckout();
+
+        app.checkout.checkoutOptions.selectGuestCheckout()
+        app.checkout.checkoutOptions.continue()
+
+        app.checkout.billingDetails.fillBillingDetails({
             firstName: 'test',
             lastName: 'test',
-            email: `Test2${Date.now()}@example.com`,
-            telephone: '1111111111',
+            email: `test+${Date.now()}@test.com`,
+            telephone: '123123123',
             address1: 'test',
-            city: 'test',
-            postCode: 'test',
+            city: 'Mensk',
+            postCode: '123123',
             country: 'Belarus',
             region: 'Horad Minsk'
-        });
-        checkoutPage.billingDetails.continue();
+        })
+        app.checkout.billingDetails.continue()
 
-        checkoutPage.deliveryMethod.continue();
+        app.checkout.deliveryMethod.continue()
 
-        checkoutPage.paymentMethod.acceptTermsAndConditions();
-        checkoutPage.paymentMethod.continue();
+        app.checkout.paymentMethod.acceptTermsAndConditions()
+        app.checkout.paymentMethod.continue()
 
-        checkoutPage.confirmOrder.confirm();
+        app.checkout.confirmOrder.confirm()
 
-        const confirmationPage = new ConfirmationPage();
-        expect(confirmationPage.isOpened()).toEqual(true);
+        browser.waitUntil(() => app.confirmation.isOpened(), {
+            timeoutMsg: "Expected confirmation page to be loaded"
+        })
     })
-});
+})

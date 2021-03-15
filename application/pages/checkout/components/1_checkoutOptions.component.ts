@@ -5,7 +5,10 @@ export class CheckoutOptionsComponent {
 
     selectGuestCheckout() {
         const GuestCheckoutRadio = this.root.$('input[type="radio"][value="guest"]');
-        expect(GuestCheckoutRadio).toBeVisible({message:'Guest radio didn\'t appear'});
+        expect(GuestCheckoutRadio).toBeVisible({
+            //wait: 5000,
+            message:'Guest radio didn\'t appear'
+        });
         GuestCheckoutRadio.click();
     }
 

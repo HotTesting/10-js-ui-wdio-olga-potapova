@@ -28,6 +28,6 @@ export class CheckoutPage {
     }
 
     open() {
-        browser.url('index.php?route=checkout/cart');
+        browser.url('/index.php?route=checkout/checkout');
     }
 }

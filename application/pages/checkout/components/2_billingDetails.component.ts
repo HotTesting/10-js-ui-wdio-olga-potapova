@@ -16,11 +16,14 @@ export class BillingDetailsComponent {
     }) {
         this.root.$('#input-payment-firstname').setValue(data.firstName);
         this.root.$('#input-payment-lastname').setValue(data.lastName);
-        this.root.$('#input-payment-email').setValue(data.telephone);
+        this.root.$('#input-payment-email').setValue(data.email);
+        this.root.$('#input-payment-telephone').setValue(data.telephone);
         this.root.$('#input-payment-address-1').setValue(data.address1);
+        this.root.$('#input-payment-city').setValue(data.city);
         this.root.$('#input-payment-postcode').setValue(data.postCode);
         this.root.$('#input-payment-country').selectByVisibleText(data.country);
         this.root.$('#input-payment-zone').selectByVisibleText(data.region);
+        //browser.pause(4000);
     }
 
     continue() {
