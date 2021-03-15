@@ -14,10 +14,14 @@ export class ProductCardComponent {
     };
 
     addToWishList() {
-        
+        const addToWishListButton = this.root.$('button[onclick*="wishlist.add"]');
+        expect(addToWishListButton).toBeVisible(); //toBeVisible запускает 3секундное ожидание элемента
+        addToWishListButton.click();
     }
 
     compareThisProduct() {
-
+        const addToCompareButton = this.root.$('button[onclick*="compare.add"]');
+        expect(addToCompareButton).toBeVisible(); //toBeVisible запускает 3секундное ожидание элемента
+        addToCompareButton.click();
     }
 }

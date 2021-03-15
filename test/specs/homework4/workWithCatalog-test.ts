@@ -37,7 +37,6 @@ check easier*/
 
 beforeEach(function () {
     browser.deleteCookies();
-
 })
 
 describe('Items', function () {
@@ -47,38 +46,20 @@ describe('Items', function () {
         app.registration.open();
         app.registration.register(user)
 
-        browser.url('/mp3-players');
-        const content = $('#content');
-        const heading = content.$('h2');
-        expect(heading).toHaveText('MP3 Players', {
-            wait: 5000,
-            message: 'No products are shown on the page'
-        })
-        const successfullMessage = $('div.alert-success');
-
+        app.home.openAllForCategory('MP3 Players')
         products.forEach(product => {
-            const itemContainers = content.$$('div.product-grid');
-            const [itemToAdd] = itemContainers.filter(el => el.$('h4').getText() === product.name);
-
-            const addToWishListButton = itemToAdd.$('i.fa-heart');
-            addToWishListButton.click();
-            expect(successfullMessage).toHaveTextContaining('Success: You have added', {
-                wait: 3000,
-                message: 'No successful message is shown'
-            });
+            const itemToAdd = app.productCategory.products.find(pr => pr.title() === product.name);
+            expect(itemToAdd).toBeDefined();
+            itemToAdd.addToWishList();
+            expect(app.productCategory.successMessage.message).toHaveTextContaining('Success: You have added', {
+                message: 'Success message doesn\'t contain success text'
+            })
             waitHelper.waitForPageStopScrolling(/*up to*/20/*times*/, 100/*milliseconds*/);
         });
-
-        const wishListLink = successfullMessage.$('a[href*="wishlist"]');
-        expect(wishListLink).toHaveTextContaining('wish list', {
-            wait: 5000,
-            message: 'No successful message is shown'
-        });
-        wishListLink.click();
-        const elementsInWishList = content.$$('tbody tr');
-        expect(elementsInWishList.length).toEqual(4);
+        app.productCategory.successMessage.openWishListFromSuccessMessage();
+        expect(app.wishList.quantity).toEqual(4);
         //there is a bug! on automated testing mode it opens guest prices (122 instead of 100), login is saved though
-        expect(elementsInWishList.map(row => row.$('div.price').getText())).toEqual(products.map(product => product.price));
+        expect(app.wishList.prices).toEqual(products.map(product => product.price));
     })
 
     //iterate objects in test
@@ -87,7 +68,7 @@ describe('Items', function () {
         const user = dataHelper.getUser();
         app.registration.open();
         app.registration.register(user)
-        browser.url('/mp3-players');
+        app.home.openAllForCategory('MP3 Players')
         const content = $('#content');
         const heading = content.$('h2');
         expect(heading).toHaveText('MP3 Players', {
@@ -125,7 +106,8 @@ describe('Items', function () {
     })
 
     it('can be selected for comparison by guest', function () {
-        browser.url('/mp3-players');
+        const app = new App();
+        app.home.openAllForCategory('MP3 Players')
         const content = $('#content');
         const heading = content.$('h2');
         expect(heading).toHaveText('MP3 Players', {
@@ -160,7 +142,8 @@ describe('Items', function () {
 
     //perform single test for each item
     products.forEach(product => it('can be added to cart by guest', function () {
-        browser.url('/mp3-players');
+        const app = new App();
+        app.home.openAllForCategory('MP3 Players')
         const content = $('#content');
         const heading = content.$('h2');
         expect(heading).toHaveText('MP3 Players', {
@@ -202,6 +185,7 @@ describe('Items', function () {
     //iterate objects inside of test
     products.map(product => it('can be added to cart by registered user', function () {
         const app = new App();
+        app.home.openAllForCategory('MP3 Players')
         const user = dataHelper.getUser();
         app.registration.open();
         app.registration.register(user)

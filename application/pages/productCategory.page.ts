@@ -1,4 +1,5 @@
 import { ProductCardComponent } from "./components/productCard.component"
+import { SuccessMessage } from "./components/successMessage.component"
 import { TopLinks } from "./components/toplinks.component"
 
 
@@ -13,6 +14,10 @@ export class ProductCategoryPage {
         return $$('div.product-layout').map(elem => {
             return new ProductCardComponent(elem)
         })
+    }
+
+    get successMessage(): SuccessMessage {
+        return new SuccessMessage()
     }
 
 }
