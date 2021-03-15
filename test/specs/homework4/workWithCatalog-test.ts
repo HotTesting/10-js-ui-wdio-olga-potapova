@@ -73,7 +73,7 @@ const waitForPageStopScrolling = function (totalCount, timeout, currentCount = 0
 }
 
 before(function () {
-    browser.maximizeWindow();
+    //browser.maximizeWindow();
 });
 
 beforeEach(function () {

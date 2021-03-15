@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+      "target": "ES2016",
       "types": ["node", "webdriverio/sync", "@wdio/mocha-framework", "expect-webdriverio"]
     }
 }
