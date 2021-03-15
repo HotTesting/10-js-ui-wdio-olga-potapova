@@ -15,12 +15,12 @@ export class RegistrationPage {
         telephone: string,
         password: string
     }) {
-        const continueButton = this.content.$('input[type="submit"][value="Continue"]');
-        expect(continueButton).toBeDisplayed({
+       
+        const firstName = this.content.$('#input-firstname');
+        expect(firstName).toBeDisplayed({
             wait: 5000,
             message: 'Continue button isn\'t shown on the page'
         })
-        const firstName = this.content.$('#input-firstname');
         firstName.setValue(data.firstName);
         const lastName = this.content.$('#input-lastname');
         lastName.setValue(data.lastName);
@@ -34,6 +34,12 @@ export class RegistrationPage {
         passwordConfirm.setValue(data.password);
         const policy = this.content.$('input[type="checkbox"][name="agree"]');
         policy.click();
+        const continueButton = this.content.$('input[type="submit"][value="Continue"]');
         continueButton.click();
+        const successMessage = this.content.$('h1');
+        expect(successMessage).toHaveText('Your Account Has Been Created!', {
+            wait: 5000,
+            message: 'Success registration message isn\'t shown, probably a user isn\'t registered'
+        })
     }
 }

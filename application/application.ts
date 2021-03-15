@@ -2,7 +2,7 @@ import { ConfirmationPage } from "./pages/checkout/confirmation.page";
 import { CheckoutPage } from "./pages/checkout/index";
 import { HomePage } from "./pages/home/home.page";
 import { ProductCategoryPage } from "./pages/productCategory.page";
-import { RegistrationPage } from "./pages/registration.page";
+import { RegistrationPage } from "./pages/registration/registration.page";
 
 
 export class App {

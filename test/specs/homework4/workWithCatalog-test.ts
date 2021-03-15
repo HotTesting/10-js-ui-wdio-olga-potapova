@@ -1,11 +1,11 @@
 // Use http://93.126.97.71:10082/mp3-players to simplify these tests. Mp3 players does not have custom params on details page.
-// bonus points:
-// - use preconditions
-
 import { App } from "../../../application/application";
 import { WaitHelper } from "../../../helpers/wait.helper";
+import { DataHelper } from "../../../helpers/data.helper"
 
-// - use dataprovider
+const waitHelper = new WaitHelper();
+const dataHelper = new DataHelper();
+
 const products = [
     {
         name: 'iPod Classic',
@@ -29,14 +29,6 @@ const products = [
     }
 ]
 
-const user = {
-    firstName: 'Test',
-    lastName: 'Test',
-    email: `test+${Date.now()}@test.com`,
-    telephone: '123456789',
-    password: 'Test123456'
-}
-
 /*after clicking 'Comparison' page scrolls up to successful message so that click to product
 in next forEach iteration can be misplaced (product details will be open instead), so that 
 test should wait for page stopped scrolling before clicking the next product*/
@@ -45,12 +37,13 @@ check easier*/
 
 beforeEach(function () {
     browser.deleteCookies();
+
 })
 
 describe('Items', function () {
     it('can be added to wishlist', function () {
         const app = new App();
-        const waitHelper = new WaitHelper();
+        const user = dataHelper.getUser();
         app.registration.open();
         app.registration.register(user)
 
@@ -91,7 +84,7 @@ describe('Items', function () {
     //iterate objects in test
     it('can be selected for comparison by registered user', function () {
         const app = new App();
-        const waitHelper = new WaitHelper();
+        const user = dataHelper.getUser();
         app.registration.open();
         app.registration.register(user)
         browser.url('/mp3-players');
@@ -132,7 +125,6 @@ describe('Items', function () {
     })
 
     it('can be selected for comparison by guest', function () {
-        const waitHelper = new WaitHelper();
         browser.url('/mp3-players');
         const content = $('#content');
         const heading = content.$('h2');
@@ -141,7 +133,6 @@ describe('Items', function () {
             message: 'No products are shown on the page'
         })
         const successfullMessage = $('div.alert-success');
-
         products.forEach(product => {
             const itemContainers = content.$$('div.product-grid');
             const [itemToAdd] = itemContainers.filter(el => el.$('h4').getText() === product.name);
@@ -153,7 +144,6 @@ describe('Items', function () {
             });
             waitHelper.waitForPageStopScrolling(/*up to*/20/*times*/, 50/*milliseconds*/);
         })
-
         const comparisonLink = successfullMessage.$('a[href*="compare"]');
         expect(comparisonLink).toHaveTextContaining('product comparison', {
             wait: 5000,
@@ -162,7 +152,6 @@ describe('Items', function () {
         comparisonLink.click();
         const elementsInComparison = content.$$('tbody tr td img');
         expect(elementsInComparison.length).toEqual(4);
-
         const comparisonTableRows = content.$$('tbody tr');
         const [priceRows] = comparisonTableRows.filter(row => row.$('td:first-of-type').getText() == 'Price');
         const priceValues = priceRows.$$('td').map(row => row.getText());
@@ -171,7 +160,6 @@ describe('Items', function () {
 
     //perform single test for each item
     products.forEach(product => it('can be added to cart by guest', function () {
-        const waitHelper = new WaitHelper();
         browser.url('/mp3-players');
         const content = $('#content');
         const heading = content.$('h2');
@@ -214,7 +202,7 @@ describe('Items', function () {
     //iterate objects inside of test
     products.map(product => it('can be added to cart by registered user', function () {
         const app = new App();
-        const waitHelper = new WaitHelper();
+        const user = dataHelper.getUser();
         app.registration.open();
         app.registration.register(user)
         const content = $('#content');
