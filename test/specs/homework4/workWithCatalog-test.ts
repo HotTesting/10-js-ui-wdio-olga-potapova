@@ -3,6 +3,7 @@
 // - use preconditions
 
 import { App } from "../../../application/application";
+import { WaitHelper } from "../../../helpers/wait.helper";
 
 // - use dataprovider
 const products = [
@@ -41,24 +42,6 @@ in next forEach iteration can be misplaced (product details will be open instead
 test should wait for page stopped scrolling before clicking the next product*/
 /*in real project I would place it into some wait helper, now saved here just to make homework
 check easier*/
-const waitForPageStopScrolling = function (totalCount, timeout, currentCount = 0) {
-    if (currentCount < totalCount) {
-        let startPageYOffset = browser.execute('return window.pageYOffset');
-        browser.pause(timeout);
-        let finPageYOffset = browser.execute('return window.pageYOffset');
-        if (startPageYOffset == finPageYOffset) {
-            return;
-        } else {
-            waitForPageStopScrolling(totalCount, timeout, ++currentCount);
-        }
-    } else {
-        throw 'Page hasn\'t stop scrolling in more than ' + totalCount;
-    }
-}
-
-before(function () {
-    //browser.maximizeWindow();
-});
 
 beforeEach(function () {
     browser.deleteCookies();
@@ -67,9 +50,10 @@ beforeEach(function () {
 describe('Items', function () {
     it('can be added to wishlist', function () {
         const app = new App();
+        const waitHelper = new WaitHelper();
         app.registration.open();
         app.registration.register(user)
-        
+
         browser.url('/mp3-players');
         const content = $('#content');
         const heading = content.$('h2');
@@ -89,7 +73,7 @@ describe('Items', function () {
                 wait: 3000,
                 message: 'No successful message is shown'
             });
-            waitForPageStopScrolling(/*up to*/20/*times*/, 100/*milliseconds*/);
+            waitHelper.waitForPageStopScrolling(/*up to*/20/*times*/, 100/*milliseconds*/);
         });
 
         const wishListLink = successfullMessage.$('a[href*="wishlist"]');
@@ -107,6 +91,7 @@ describe('Items', function () {
     //iterate objects in test
     it('can be selected for comparison by registered user', function () {
         const app = new App();
+        const waitHelper = new WaitHelper();
         app.registration.open();
         app.registration.register(user)
         browser.url('/mp3-players');
@@ -127,7 +112,7 @@ describe('Items', function () {
                 wait: 3000,
                 message: 'No successful message is shown'
             });
-            waitForPageStopScrolling(/*up to*/20/*times*/, 50/*milliseconds*/);
+            waitHelper.waitForPageStopScrolling(/*up to*/20/*times*/, 50/*milliseconds*/);
         })
 
         const comparisonLink = successfullMessage.$('a[href*="compare"]');
@@ -147,6 +132,7 @@ describe('Items', function () {
     })
 
     it('can be selected for comparison by guest', function () {
+        const waitHelper = new WaitHelper();
         browser.url('/mp3-players');
         const content = $('#content');
         const heading = content.$('h2');
@@ -165,7 +151,7 @@ describe('Items', function () {
                 wait: 3000,
                 message: 'No successful message is shown'
             });
-            waitForPageStopScrolling(/*up to*/20/*times*/, 50/*milliseconds*/);
+            waitHelper.waitForPageStopScrolling(/*up to*/20/*times*/, 50/*milliseconds*/);
         })
 
         const comparisonLink = successfullMessage.$('a[href*="compare"]');
@@ -185,6 +171,7 @@ describe('Items', function () {
 
     //perform single test for each item
     products.forEach(product => it('can be added to cart by guest', function () {
+        const waitHelper = new WaitHelper();
         browser.url('/mp3-players');
         const content = $('#content');
         const heading = content.$('h2');
@@ -204,7 +191,7 @@ describe('Items', function () {
             wait: 5000,
             message: 'No successful message is shown'
         });
-        waitForPageStopScrolling(/*up to*/20/*times*/, 50/*milliseconds*/);
+        waitHelper.waitForPageStopScrolling(/*up to*/20/*times*/, 50/*milliseconds*/);
 
         //open cart
         const cartLink = successfullMessage.$('a[href*="cart"]');
@@ -217,7 +204,7 @@ describe('Items', function () {
 
         let quantity = elementInCart.$('input[name*=quantity]');
         expect(quantity.getAttribute('value')).toBe('1');
-        
+
         let price = elementInCart.$('.//td[5]');
         expect(price.getText()).toEqual('$122.00');
     })
@@ -227,6 +214,7 @@ describe('Items', function () {
     //iterate objects inside of test
     products.map(product => it('can be added to cart by registered user', function () {
         const app = new App();
+        const waitHelper = new WaitHelper();
         app.registration.open();
         app.registration.register(user)
         const content = $('#content');
@@ -247,7 +235,7 @@ describe('Items', function () {
             wait: 5000,
             message: 'No successful message is shown'
         });
-        waitForPageStopScrolling(/*up to*/20/*times*/, 50/*milliseconds*/);
+        waitHelper.waitForPageStopScrolling(/*up to*/20/*times*/, 50/*milliseconds*/);
 
         const cartLink = successfullMessage.$('a[href*="cart"]');
         cartLink.click();
@@ -259,9 +247,9 @@ describe('Items', function () {
 
         let quantity = elementInCart.$('input[name*=quantity]');
         expect(quantity.getAttribute('value')).toBe('1');
-        
+
         let price = elementInCart.$('.//td[5]');
         expect(price.getText()).toEqual('$122.00');
-        })
+    })
     );
 })

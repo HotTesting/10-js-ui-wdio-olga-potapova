@@ -1,5 +1,9 @@
 import { App } from "../../../application/application"
 
+beforeEach(function () {
+    browser.deleteCookies();
+})
+
 describe('Item', function () {
 
     it('can be purchased', function () {
