@@ -134,7 +134,6 @@ describe('Items', function () {
             const [itemToAdd] = itemContainers.filter(el => el.$('h4').getText() === product.name);
             const addToComparisonButton = itemToAdd.$('i.fa-exchange');
             addToComparisonButton.click();
-            browser.pause(500);
             expect(successfullMessage).toHaveTextContaining('Success: You have added', {
                 wait: 3000,
                 message: 'No successful message is shown'
@@ -173,7 +172,6 @@ describe('Items', function () {
             const [itemToAdd] = itemContainers.filter(el => el.$('h4').getText() === product.name);
             const addToComparisonButton = itemToAdd.$('i.fa-exchange');
             addToComparisonButton.click();
-            browser.pause(500);
             expect(successfullMessage).toHaveTextContaining('Success: You have added', {
                 wait: 3000,
                 message: 'No successful message is shown'

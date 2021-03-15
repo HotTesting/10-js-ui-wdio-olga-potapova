@@ -4,8 +4,7 @@ export class TopLinks {
     }
 
     openCheckout() {
-        this.root.$('a[title="Checkout"]').click()
-        browser.pause(1000)
+        this.root.$('a[title="Checkout"]').click();
     }
     
 }

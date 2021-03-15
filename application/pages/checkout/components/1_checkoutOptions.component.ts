@@ -5,8 +5,8 @@ export class CheckoutOptionsComponent {
 
     selectGuestCheckout() {
         const GuestCheckoutRadio = this.root.$('input[type="radio"][value="guest"]');
-        expect(GuestCheckoutRadio).toBeVisible({
-            //wait: 5000,
+        expect(GuestCheckoutRadio).toBeClickable({
+            wait: 5000, 
             message:'Guest radio didn\'t appear'
         });
         GuestCheckoutRadio.click();
@@ -14,7 +14,7 @@ export class CheckoutOptionsComponent {
 
     continue() {
         const continueButton = this.root.$('input[type="button"][value="Continue"]');
-        expect(continueButton).toBeVisible({message:'Continue button didn\'t appear'});
+        expect(continueButton).toBeClickable({message:'Continue button didn\'t appear'});
         continueButton.click();
     }
 }

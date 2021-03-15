@@ -14,6 +14,11 @@ export class BillingDetailsComponent {
         country: string,
         region: string
     }) {
+        const firstNameInput = this.root.$('#input-payment-firstname');
+        expect(firstNameInput).toBeClickable({
+            wait: 5000,
+            message:'First name input didn\'t appear'
+        })
         this.root.$('#input-payment-firstname').setValue(data.firstName);
         this.root.$('#input-payment-lastname').setValue(data.lastName);
         this.root.$('#input-payment-email').setValue(data.email);
@@ -23,7 +28,6 @@ export class BillingDetailsComponent {
         this.root.$('#input-payment-postcode').setValue(data.postCode);
         this.root.$('#input-payment-country').selectByVisibleText(data.country);
         this.root.$('#input-payment-zone').selectByVisibleText(data.region);
-        //browser.pause(4000);
     }
 
     continue() {
