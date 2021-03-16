@@ -5,7 +5,10 @@ export class DeliveryMethodComponent {
 
     continue() {
         const continueButton = this.root.$('#button-shipping-method');
-        expect(continueButton).toBeVisible({message:'Continue button didn\'t appear'});
+        expect(continueButton).toBeClickable({
+            message:'Continue button didn\'t appear',
+            wait: 5000
+        });
         continueButton.click();
     }
 }

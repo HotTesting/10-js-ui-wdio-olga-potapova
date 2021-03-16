@@ -1,3 +1,5 @@
+import { ElementsHelper } from "../../../../helpers/elements.helper";
+
 export class BillingDetailsComponent {
     protected get root(): WebdriverIO.Element {
         return $('div#collapse-payment-address').parentElement();
@@ -27,7 +29,13 @@ export class BillingDetailsComponent {
         this.root.$('#input-payment-city').setValue(data.city);
         this.root.$('#input-payment-postcode').setValue(data.postCode);
         this.root.$('#input-payment-country').selectByVisibleText(data.country);
+        browser.pause(500);
         this.root.$('#input-payment-zone').selectByVisibleText(data.region);
+    }
+    
+    selectMyShippingAddressIsDifferentFromBilling() {
+        const differentAddressCheckbox = $('input[type="checkbox"][name="shipping_address"]');
+        ElementsHelper.setSwitcherToFalse(differentAddressCheckbox);
     }
 
     continue() {

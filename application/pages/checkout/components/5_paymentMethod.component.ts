@@ -1,3 +1,5 @@
+import { ElementsHelper } from "../../../../helpers/elements.helper";
+
 export class PaymentMethodComponent {
     private get root(): WebdriverIO.Element {
         return $('div#collapse-payment-method').parentElement();
@@ -5,8 +7,7 @@ export class PaymentMethodComponent {
     
     acceptTermsAndConditions() {
         const checkbox = this.root.$('input[type="checkbox"][name="agree"]');
-        expect(checkbox).toBeVisible({message:'terms and conditions checkbox isn\'t appeared'});
-        checkbox.click();
+        ElementsHelper.setSwitcherToTrue(checkbox);
     }
 
     continue() {
