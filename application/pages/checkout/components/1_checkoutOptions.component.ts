@@ -3,11 +3,11 @@ export class CheckoutOptionsComponent {
         return $('div#collapse-checkout-option').parentElement();
     }
 
-    selectGuestCheckout() {
-        const GuestCheckoutRadio = this.root.$('input[type="radio"][value="guest"]');
+    selectCheckoutOption(option: string) {
+        const GuestCheckoutRadio = this.root.$(`input[type="radio"][value="${option}"]`);
         expect(GuestCheckoutRadio).toBeClickable({
             wait: 5000, 
-            message:'Guest radio didn\'t appear'
+            message:'Radio for selecting checkout option (guest or registered) didn\'t appear'
         });
         GuestCheckoutRadio.click();
     }

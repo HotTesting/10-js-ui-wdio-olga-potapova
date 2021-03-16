@@ -1,5 +1,5 @@
 export class BillingDetailsComponent {
-    private get root(): WebdriverIO.Element {
+    protected get root(): WebdriverIO.Element {
         return $('div#collapse-payment-address').parentElement();
     }
 
