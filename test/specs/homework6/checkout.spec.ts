@@ -1,3 +1,4 @@
+const faker = require('faker');
 import { App } from "../../../application/application"
 
 beforeEach(function () {
@@ -16,11 +17,11 @@ describe('Item', function () {
         app.checkout.checkoutOptions.selectCheckoutOption('guest')
         app.checkout.checkoutOptions.continue()
         app.checkout.billingDetails.fillBillingDetails({
-            firstName: 'test',
-            lastName: 'test',
-            email: `test+${Date.now()}@test.com`,
-            telephone: '123123123',
-            address1: 'test',
+            firstName: faker.name.findName(),
+            lastName: faker.name.lastName(),
+            email: faker.internet.email(),
+            telephone: faker.phone.phoneNumber(),
+            address1: faker.address.streetAddress(),
             city: 'Mensk',
             postCode: '123123',
             country: 'Belarus',
@@ -46,16 +47,16 @@ describe('Item', function () {
         app.checkout.checkoutOptions.selectCheckoutOption('register');
         app.checkout.checkoutOptions.continue()
         app.checkout.accountAndBillingDetails.fillAccountAndBillingDetails({
-            firstName: 'test',
-            lastName: 'test',
-            email: `test+${Date.now()}@test.com`,
-            telephone: '123123123',
-            address1: 'test',
+            firstName: faker.name.findName(),
+            lastName: faker.name.lastName(),
+            email: faker.internet.email(),
+            telephone: faker.phone.phoneNumber(),
+            address1: faker.address.streetAddress(),
             city: 'Mensk',
             postCode: '123123',
             country: 'Belarus',
             region: 'Horad Minsk',
-            password: '123456'
+            password: faker.internet.password()
         })
         app.checkout.accountAndBillingDetails.acceptPrivacyPolicy();
         app.checkout.accountAndBillingDetails.continue()
