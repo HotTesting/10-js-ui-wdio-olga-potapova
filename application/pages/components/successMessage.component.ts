@@ -21,8 +21,17 @@ export class SuccessMessage {
         const compareLink = this.message.$('a[href*="compare"]');
         expect(compareLink).toHaveTextContaining('product comparison', {
             wait: 5000,
-            message: 'Success message doesn\'t contain link to comparison list'
+            message: 'Success message doesn\'t contain link to comparison table'
         });
         compareLink.click();
+    }
+
+    openCartFromSuccessMessage() {
+        const cartLink = this.message.$('a[href*="checkout/cart"]');
+        expect(cartLink).toHaveTextContaining('shopping cart', {
+            wait: 5000,
+            message: 'Success message doesn\'t contain link to shopping cart'
+        });
+        cartLink.click();
     }
 }
