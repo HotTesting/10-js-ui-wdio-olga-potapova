@@ -1,4 +1,4 @@
-const faker = require('faker');
+const faker = require('faker')
 
 export class DataHelper {
     getUser() {
@@ -9,7 +9,7 @@ export class DataHelper {
             telephone: faker.phone.phoneNumber(),
             password: faker.internet.password()
         }
-        console.log(user);
-        return user;
+        console.log(user)
+        return user
     }
 }

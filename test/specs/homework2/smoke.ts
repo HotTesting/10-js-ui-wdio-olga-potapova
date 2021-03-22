@@ -1,39 +1,39 @@
 describe('Website', () => {
 
   it('should open and show logo', () => {
-    browser.url('/');
+    browser.url('/')
     expect($('#logo')).toBeDisplayed({
       message: 'Logo isn\'t displayed on the page'
-    });
-  });
+    })
+  })
 
   it('should allow to register', () => {
-    browser.deleteCookies();
-    browser.url('/index.php?route=account/register');
-    const content = $('#content');
-    const continueButton = content.$('input[type="submit"][value="Continue"]');
+    browser.deleteCookies()
+    browser.url('/index.php?route=account/register')
+    const content = $('#content')
+    const continueButton = content.$('input[type="submit"][value="Continue"]')
     expect(continueButton).toBeDisplayed({
         wait: 5000,
         message: 'Continue button isn\'t shown on the page'
     })
-    const firstName = content.$('#input-firstname');
-    firstName.setValue('Test');
-    const lastName = content.$('#input-lastname');
-    lastName.setValue('Test');
-    const email = content.$('#input-email');
-    email.setValue(`Test${Date.now()}@example.com`);
-    const phone = content.$('#input-telephone');
-    phone.setValue('111111111111111');
-    const password = content.$('#input-password');
-    password.setValue('2222');
-    const passwordConfirm = content.$('#input-confirm');
-    passwordConfirm.setValue('2222');
-    const policy = content.$('input[type="checkbox"][name="agree"]');
-    policy.click();
-    continueButton.click();
-    const heading = content.$('h1');
-    expect(heading).toHaveText('Your Account Has Been Created!');
-  });
+    const firstName = content.$('#input-firstname')
+    firstName.setValue('Test')
+    const lastName = content.$('#input-lastname')
+    lastName.setValue('Test')
+    const email = content.$('#input-email')
+    email.setValue(`Test${Date.now()}@example.com`)
+    const phone = content.$('#input-telephone')
+    phone.setValue('111111111111111')
+    const password = content.$('#input-password')
+    password.setValue('2222')
+    const passwordConfirm = content.$('#input-confirm')
+    passwordConfirm.setValue('2222')
+    const policy = content.$('input[type="checkbox"][name="agree"]')
+    policy.click()
+    continueButton.click()
+    const heading = content.$('h1')
+    expect(heading).toHaveText('Your Account Has Been Created!')
+  })
 
   /**
   - Try to implement as much tests as you can
@@ -47,222 +47,222 @@ describe('Website', () => {
   // this test gives you 20 points
   // http://93.126.97.71:10082/index.php?route=account/return/add
   // Notice that datepicker is optional
-  describe("Product return", function () {
-    it("can be submited", function () {
-      browser.deleteCookies();
-      browser.url('/index.php?route=account/return/add');
-      const content = $('#content');
+  describe('Product return', function () {
+    it('can be submited', function () {
+      browser.deleteCookies()
+      browser.url('/index.php?route=account/return/add')
+      const content = $('#content')
 
-      const firstName = content.$('#input-firstname');
+      const firstName = content.$('#input-firstname')
       expect(firstName).toBeVisible({
         message: 'First name input wasn\'t displayed'
       })
-      firstName.setValue('Test');
+      firstName.setValue('Test')
 
-      const lastName = content.$('#input-lastname');
+      const lastName = content.$('#input-lastname')
       expect(lastName).toBeVisible({
         message: 'Last name input wasn\'t displayed'
       })
-      lastName.setValue('Test');
+      lastName.setValue('Test')
 
-      const email = content.$('#input-email');
+      const email = content.$('#input-email')
       expect(email).toBeVisible({
         message: 'Email input wasn\'t displayed'
       })
-      email.setValue(`Test${Date.now()}@example.com`);
+      email.setValue(`Test${Date.now()}@example.com`)
 
-      const phone = content.$('#input-telephone');
+      const phone = content.$('#input-telephone')
       expect(phone).toBeVisible({
         message: 'Phone number input wasn\'t displayed'
       })
-      phone.setValue('1111111');
+      phone.setValue('1111111')
 
-      const orderID = content.$('#input-order-id');
+      const orderID = content.$('#input-order-id')
       expect(orderID).toBeVisible({
         message: 'Order ID input wasn\'t displayed'
       })
-      orderID.setValue('222222');
+      orderID.setValue('222222')
 
-      const productName = content.$('#input-product');
+      const productName = content.$('#input-product')
       expect(productName).toBeVisible({
         message: 'Product name input wasn\'t displayed'
       })
-      productName.setValue('Product1');
+      productName.setValue('Product1')
 
-      const productCode = content.$('#input-model');
+      const productCode = content.$('#input-model')
       expect(productCode).toBeVisible({
         message: 'Product code input wasn\'t displayed'
       })
-      productCode.setValue('123456');
+      productCode.setValue('123456')
 
-      const reason = content.$('label*=Dead On Arrival');
+      const reason = content.$('label*=Dead On Arrival')
       expect(reason).toBeVisible({
         message: 'Reason input wasn\'t displayed'
       })
-      reason.click();
+      reason.click()
 
-      const submit = content.$('input[type="submit"]');
+      const submit = content.$('input[type="submit"]')
       expect(submit).toBeVisible({
         message: 'Submit button input wasn\'t displayed'
       })
-      submit.click();
+      submit.click()
 
-      const successfullMessages = content.$$('p');
-      expect(successfullMessages[0]).toHaveText("Thank you for submitting your return request. Your request has been sent to the relevant department for processing.");
-      expect(successfullMessages[1]).toHaveText("You will be notified via e-mail as to the status of your request.");
-    });
-  });
+      const successfullMessages = content.$$('p')
+      expect(successfullMessages[0]).toHaveText('Thank you for submitting your return request. Your request has been sent to the relevant department for processing.')
+      expect(successfullMessages[1]).toHaveText('You will be notified via e-mail as to the status of your request.')
+    })
+  })
 
   // http://93.126.97.71:10082/index.php?route=account/voucher
   // this test gives you 20 points
-  describe("Gift Certificate", function () {
-    it("can be purchased", function () {
-      browser.deleteCookies();
-      browser.url('/index.php?route=account/voucher');
-      const content = $('#content');
+  describe('Gift Certificate', function () {
+    it('can be purchased', function () {
+      browser.deleteCookies()
+      browser.url('/index.php?route=account/voucher')
+      const content = $('#content')
 
-      const recipientName = content.$('[name="to_name"]');
+      const recipientName = content.$('[name="to_name"]')
       expect(recipientName).toBeVisible({
         message: 'recipient name input wasn\'t displayed'
       })
-      recipientName.setValue('Test1');
+      recipientName.setValue('Test1')
 
-      const recipientEmail = content.$('#input-to-email');
+      const recipientEmail = content.$('#input-to-email')
       expect(recipientEmail).toBeVisible({
         message: 'Recipient email input wasn\'t displayed'
       })
-      recipientEmail.setValue(`Test1${Date.now()}@example.com`);
+      recipientEmail.setValue(`Test1${Date.now()}@example.com`)
 
-      const fromName = content.$('#input-from-name');
+      const fromName = content.$('#input-from-name')
       expect(fromName).toBeVisible({
         message: 'From name input wasn\'t displayed'
       })
-      fromName.setValue('Test2');
+      fromName.setValue('Test2')
 
-      const fromEmail = content.$('#input-from-email');
+      const fromEmail = content.$('#input-from-email')
       expect(fromEmail).toBeVisible({
         message: 'From email input wasn\'t displayed'
       })
-      fromEmail.setValue('Test2${Date.now()}@example.com');
+      fromEmail.setValue('Test2${Date.now()}@example.com')
 
-      const reason = content.$('label*=Christmas');
+      const reason = content.$('label*=Christmas')
       expect(reason).toBeVisible({
         message: 'Reason input wasn\'t displayed'
       })
-      reason.click();
+      reason.click()
 
-      const agreeToNotRefundable = content.$('[type="checkbox"]');
+      const agreeToNotRefundable = content.$('[type="checkbox"]')
       expect(agreeToNotRefundable).toBeVisible({
         message: 'Agree to not refundable checkbox wasn\'t displayed'
       })
-      agreeToNotRefundable.click();
+      agreeToNotRefundable.click()
 
-      const submit = content.$('input[type="submit"]');
+      const submit = content.$('input[type="submit"]')
       expect(submit).toBeVisible({
         message: 'Submit button wasn\'t displayed'
       })
-      submit.click();
+      submit.click()
 
-      const heading = content.$('h1');
+      const heading = content.$('h1')
       expect(heading).toHaveText('Purchase a Gift Certificate')
 
-      const successfullMessage = content.$('#content p');
+      const successfullMessage = content.$('#content p')
       expect(successfullMessage).toHaveText('This gift certificate will be emailed to the recipient after your order has been paid for.')
-    });
-  });
+    })
+  })
 
   // this test gives you 20 points
   // http://93.126.97.71:10082/index.php?route=information/contact
-  describe("Contact us form", function () {
-    it("must send messages to shop administration", function () {
-      browser.deleteCookies();
-      browser.url('/index.php?route=information/contact');
+  describe('Contact us form', function () {
+    it('must send messages to shop administration', function () {
+      browser.deleteCookies()
+      browser.url('/index.php?route=information/contact')
       
-      const content = $('#content');
+      const content = $('#content')
 
-      const name = content.$('#input-name');
+      const name = content.$('#input-name')
       expect(name).toBeVisible({
         message: 'Name input didn\'t appear'
-      });
-      name.setValue('Test1');
+      })
+      name.setValue('Test1')
 
-      const email = content.$('#input-email');
+      const email = content.$('#input-email')
       expect(email).toBeVisible({
         message: 'Email input didn\'t appear'
-      });
-      email.setValue(`Test1${Date.now()}@example.com`);
+      })
+      email.setValue(`Test1${Date.now()}@example.com`)
 
-      const enquiry = content.$('#input-enquiry');
+      const enquiry = content.$('#input-enquiry')
       expect(enquiry).toBeVisible({
         message: 'Enquiry input didn\'t appear'
-      });
-      enquiry.setValue('Hi everyone here is the message for you');
+      })
+      enquiry.setValue('Hi everyone here is the message for you')
 
-      const submit = content.$('input[type="submit"]');
+      const submit = content.$('input[type="submit"]')
       expect(submit).toBeVisible({
         message: 'Email input didn\'t appear'
-      });
-      submit.click();
+      })
+      submit.click()
 
-      const heading = content.$('h1');
+      const heading = content.$('h1')
 
-      expect(heading).toHaveText('Contact Us');
+      expect(heading).toHaveText('Contact Us')
 
-      const continueButton = content.$('a.btn.btn-primary');
+      const continueButton = content.$('a.btn.btn-primary')
       expect(continueButton).toBeVisible({
         message: 'Continue button didn\'t appear'
       })
-      continueButton.click();
+      continueButton.click()
 
-      expect(browser).toHaveUrlContaining('route=common/home');
-    });
-  });
+      expect(browser).toHaveUrlContaining('route=common/home')
+    })
+  })
 
   // Each implemented test gives you 20 points 
-  describe("Items search", function () {
-    it("should show results in case multiple items matches", function () {
-      browser.deleteCookies();
-      browser.url('/index.php?route=common/home');
-      const content = $('#content');
+  describe('Items search', function () {
+    it('should show results in case multiple items matches', function () {
+      browser.deleteCookies()
+      browser.url('/index.php?route=common/home')
+      const content = $('#content')
 
-      const searchField = $('input[name="search"]');
+      const searchField = $('input[name="search"]')
       expect(searchField).toBeVisible({
         message: 'Search field didn\'t appear'
       })
-      searchField.setValue('ipod\n');
+      searchField.setValue('ipod\n')
 
-      const heading = content.$('h2');
-      expect(heading).toHaveText('Products meeting the search criteria');
+      const heading = content.$('h2')
+      expect(heading).toHaveText('Products meeting the search criteria')
 
-      const foundItems = $$('div.product-layout.product-grid');
-      expect(foundItems.length).toBe(4);
+      const foundItems = $$('div.product-layout.product-grid')
+      expect(foundItems.length).toBe(4)
 
       foundItems.forEach(el => {
-        const searchResultHeader = el.$('h4 a');
-        expect(searchResultHeader).toHaveTextContaining('iPod');
-      });
-    });
+        const searchResultHeader = el.$('h4 a')
+        expect(searchResultHeader).toHaveTextContaining('iPod')
+      })
+    })
 
-    it("should redirect to 'no matching results' in case no items matched", function () {
-      browser.deleteCookies();
-      browser.url('/index.php?route=common/home');
-      const content = $('#content');
+    it('should redirect to \'no matching results\' in case no items matched', function () {
+      browser.deleteCookies()
+      browser.url('/index.php?route=common/home')
+      const content = $('#content')
 
-      const searchField = $('input[name="search"]');
+      const searchField = $('input[name="search"]')
       expect(searchField).toBeVisible({
         message: 'Search field didn\'t appear'
       })
-      searchField.setValue('tratata\n');
+      searchField.setValue('tratata\n')
       
-      const heading = content.$('h2');
-      expect(heading).toHaveText('Products meeting the search criteria');
+      const heading = content.$('h2')
+      expect(heading).toHaveText('Products meeting the search criteria')
 
-      const noResultsMessage = content.$('p=There is no product that matches the search criteria.');
-      expect(noResultsMessage).toBePresent();
+      const noResultsMessage = content.$('p=There is no product that matches the search criteria.')
+      expect(noResultsMessage).toBePresent()
 
-      const foundItems = $$('div.product-layout.product-grid');
-      expect(foundItems.length).toBe(0);
-    });
-  });
+      const foundItems = $$('div.product-layout.product-grid')
+      expect(foundItems.length).toBe(0)
+    })
+  })
 
 })

@@ -1,4 +1,4 @@
-import { BillingDetailsComponent } from "./2_billingDetails.component";
+import { BillingDetailsComponent } from './2_billingDetails.component'
 
 export class AccountAndBillingDetailsComponent extends BillingDetailsComponent {
     fillAccountAndBillingDetails(data: {
@@ -24,19 +24,19 @@ export class AccountAndBillingDetailsComponent extends BillingDetailsComponent {
             country: data.country,
             region: data.region
         })
-        this.root.$('#input-payment-password').setValue(data.password);
-        this.root.$('#input-payment-confirm').setValue(data.password);
+        this.root.$('#input-payment-password').setValue(data.password)
+        this.root.$('#input-payment-confirm').setValue(data.password)
     }
 
     acceptPrivacyPolicy() {
-        const acceptCheckbox = $('input[type="checkbox"][name="agree"]');
-        expect(acceptCheckbox).toBeVisible({message:'Accept Privacy Policy checkbox didn\'t appear'});
-        acceptCheckbox.click();
+        const acceptCheckbox = $('input[type="checkbox"][name="agree"]')
+        expect(acceptCheckbox).toBeVisible({message:'Accept Privacy Policy checkbox didn\'t appear'})
+        acceptCheckbox.click()
     }
 
     continue() {
-        const continueButton = this.root.$('input#button-register');
-        expect(continueButton).toBeVisible({message:'Continue button didn\'t appear'});
-        continueButton.click();
+        const continueButton = this.root.$('input#button-register')
+        expect(continueButton).toBeVisible({message:'Continue button didn\'t appear'})
+        continueButton.click()
     }
 }

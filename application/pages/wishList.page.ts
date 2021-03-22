@@ -1,10 +1,10 @@
 export class WishList {
     private get wishListElements(): WebdriverIO.Element[] {
-        return $$('#content tbody tr');
+        return $$('#content tbody tr')
     }
 
     get prices(): string [] {
-        return this.wishListElements.map(row => row.$('div.price').getText());
+        return this.wishListElements.map(row => row.$('div.price').getText())
     }
 
     get quantity(): number {

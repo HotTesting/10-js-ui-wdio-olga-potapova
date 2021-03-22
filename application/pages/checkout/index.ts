@@ -1,36 +1,36 @@
-import { CheckoutOptionsComponent } from "./components/1_checkoutOptions.component";
-import { AccountAndBillingDetailsComponent } from "./components/a_2_accountAndBillingDetails";
-import { BillingDetailsComponent } from "./components/2_billingDetails.component";
-import { DeliveryMethodComponent } from "./components/4_deliveryMethod.component";
-import { PaymentMethodComponent } from "./components/5_paymentMethod.component";
-import { ConfirmOrderComponent } from "./components/6_confirmOrder.component";
-import { deliveryDetails } from "./components/3_deliveryDetails.component";
+import { CheckoutOptionsComponent } from './components/1_checkoutOptions.component'
+import { AccountAndBillingDetailsComponent } from './components/a_2_accountAndBillingDetails'
+import { BillingDetailsComponent } from './components/2_billingDetails.component'
+import { DeliveryMethodComponent } from './components/4_deliveryMethod.component'
+import { PaymentMethodComponent } from './components/5_paymentMethod.component'
+import { ConfirmOrderComponent } from './components/6_confirmOrder.component'
+import { deliveryDetails } from './components/3_deliveryDetails.component'
 
 //index.ts - if file is called index, all the folder can be imported like a file 
 export class CheckoutPage {
 
     get checkoutOptions() {
-        return new CheckoutOptionsComponent();
+        return new CheckoutOptionsComponent()
     }
 
     get billingDetails() {
-        return new BillingDetailsComponent();
+        return new BillingDetailsComponent()
     }
 
     get accountAndBillingDetails() {
-        return new AccountAndBillingDetailsComponent();
+        return new AccountAndBillingDetailsComponent()
     }
 
     get deliveryDetails() {
-        return new deliveryDetails();
+        return new deliveryDetails()
     }
 
     get deliveryMethod() {
-        return new DeliveryMethodComponent();
+        return new DeliveryMethodComponent()
     }
 
     get paymentMethod() {
-        return new PaymentMethodComponent();
+        return new PaymentMethodComponent()
     }
 
     get confirmOrder() {
@@ -38,6 +38,6 @@ export class CheckoutPage {
     }
 
     open() {
-        browser.url('/index.php?route=checkout/checkout');
+        browser.url('/index.php?route=checkout/checkout')
     }
 }

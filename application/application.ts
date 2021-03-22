@@ -1,11 +1,11 @@
-import { ConfirmationPage } from "./pages/checkout/confirmation.page";
-import { CheckoutPage } from "./pages/checkout/index";
-import { CompareTable } from "./pages/compareTable.page";
-import { HomePage } from "./pages/home/home.page";
-import { ProductCategoryPage } from "./pages/productCategory.page";
-import { RegistrationPage } from "./pages/registration/registration.page";
-import { ShoppingCart } from "./pages/shoppingCart.page";
-import { WishList } from "./pages/wishList.page";
+import { ConfirmationPage } from './pages/checkout/confirmation.page'
+import { CheckoutPage } from './pages/checkout/index'
+import { CompareTable } from './pages/compareTable.page'
+import { HomePage } from './pages/home/home.page'
+import { ProductCategoryPage } from './pages/productCategory.page'
+import { RegistrationPage } from './pages/registration/registration.page'
+import { ShoppingCart } from './pages/shoppingCart.page'
+import { WishList } from './pages/wishList.page'
 
 
 export class App {
@@ -23,9 +23,9 @@ export class App {
         this.productCategory = new ProductCategoryPage()
         this.checkout = new CheckoutPage()
         this.confirmation = new ConfirmationPage()
-        this.registration = new RegistrationPage();
-        this.wishList = new WishList();
-        this.compareTable = new CompareTable();
-        this.shoppingCart = new ShoppingCart();
+        this.registration = new RegistrationPage()
+        this.wishList = new WishList()
+        this.compareTable = new CompareTable()
+        this.shoppingCart = new ShoppingCart()
     }
 }

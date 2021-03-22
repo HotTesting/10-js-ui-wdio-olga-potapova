@@ -1,8 +1,8 @@
-const faker = require('faker');
-import { App } from "../../../application/application"
+const faker = require('faker')
+import { App } from '../../../application/application'
 
 beforeEach(function () {
-    browser.deleteCookies();
+    browser.deleteCookies()
 })
 
 describe('Item', function () {
@@ -13,7 +13,7 @@ describe('Item', function () {
         const iPodShuffle = app.productCategory.products.find(product => product.title() === 'iPod Shuffle')
         expect(iPodShuffle).toBeDefined()
         iPodShuffle.addToCart()
-        app.productCategory.topLinks.openCheckout();
+        app.productCategory.topLinks.openCheckout()
         app.checkout.checkoutOptions.selectCheckoutOption('guest')
         app.checkout.checkoutOptions.continue()
         app.checkout.billingDetails.fillBillingDetails({
@@ -33,7 +33,7 @@ describe('Item', function () {
         app.checkout.paymentMethod.continue()
         app.checkout.confirmOrder.confirm()
         browser.waitUntil(() => app.confirmation.isOpened(), {
-            timeoutMsg: "Expected confirmation page to be loaded"
+            timeoutMsg: 'Expected confirmation page to be loaded'
         })
     })
 
@@ -43,8 +43,7 @@ describe('Item', function () {
         const iPodShuffle = app.productCategory.products.find(product => product.title() === 'iPod Shuffle')
         expect(iPodShuffle).toBeDefined()
         iPodShuffle.addToCart()
-        app.productCategory.topLinks.openCheckout();
-        //app.checkout.checkoutOptions.selectCheckoutOption('register');
+        app.productCategory.topLinks.openCheckout()
         app.checkout.checkoutOptions.continue()
         app.checkout.accountAndBillingDetails.fillAccountAndBillingDetails({
             firstName: faker.name.findName(),
@@ -58,15 +57,15 @@ describe('Item', function () {
             region: 'Horad Minsk',
             password: faker.internet.password()
         })
-        app.checkout.accountAndBillingDetails.acceptPrivacyPolicy();
+        app.checkout.accountAndBillingDetails.acceptPrivacyPolicy()
         app.checkout.accountAndBillingDetails.continue()
-        app.checkout.deliveryDetails.continue();
+        app.checkout.deliveryDetails.continue()
         app.checkout.deliveryMethod.continue()
         app.checkout.paymentMethod.acceptTermsAndConditions()
         app.checkout.paymentMethod.continue()
         app.checkout.confirmOrder.confirm()
         browser.waitUntil(() => app.confirmation.isOpened(), {
-            timeoutMsg: "Expected confirmation page to be loaded"
+            timeoutMsg: 'Expected confirmation page to be loaded'
         })
     })
 
@@ -76,7 +75,7 @@ describe('Item', function () {
         const iPodShuffle = app.productCategory.products.find(product => product.title() === 'iPod Shuffle')
         expect(iPodShuffle).toBeDefined()
         iPodShuffle.addToCart()
-        app.productCategory.topLinks.openCheckout();
+        app.productCategory.topLinks.openCheckout()
         app.checkout.checkoutOptions.selectCheckoutOption('guest')
         app.checkout.checkoutOptions.continue()
         app.checkout.billingDetails.fillBillingDetails({
@@ -90,7 +89,7 @@ describe('Item', function () {
             country: 'Belarus',
             region: 'Horad Minsk'
         })
-        app.checkout.billingDetails.selectMyShippingAddressIsDifferentFromBilling();
+        app.checkout.billingDetails.selectMyShippingAddressIsDifferentFromBilling()
         app.checkout.billingDetails.continue()
         app.checkout.deliveryDetails.fillShippingAddress({
             firstName: faker.name.findName(),
@@ -100,14 +99,14 @@ describe('Item', function () {
             postCode: '123123',
             country: 'Belarus',
             region: 'Horad Minsk'
-        });
-        app.checkout.deliveryDetails.continueForGuest();
+        })
+        app.checkout.deliveryDetails.continueForGuest()
         app.checkout.deliveryMethod.continue()
         app.checkout.paymentMethod.acceptTermsAndConditions()
         app.checkout.paymentMethod.continue()
         app.checkout.confirmOrder.confirm()
         browser.waitUntil(() => app.confirmation.isOpened(), {
-            timeoutMsg: "Expected confirmation page to be loaded"
+            timeoutMsg: 'Expected confirmation page to be loaded'
         })
     })
 })

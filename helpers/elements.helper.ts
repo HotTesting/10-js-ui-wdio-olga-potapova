@@ -1,17 +1,18 @@
+/* eslint-disable no-undef */
 export class ElementsHelper {
     static setSwitcherToTrue(el: WebdriverIO.Element) {
-        expect(el).toBeClickable({ wait: 5000 });
+        expect(el).toBeClickable({ wait: 5000 })
         if(el.isSelected() == false) {
-            el.click();
+            el.click()
         }
-        expect(el.isSelected()).toBe(true);
+        expect(el.isSelected()).toBe(true)
     }
 
     static setSwitcherToFalse(el: WebdriverIO.Element) {
-        expect(el).toBeClickable({ wait: 5000 });
+        expect(el).toBeClickable({ wait: 5000 })
         if(el.isSelected() == true) {
-            el.click();
+            el.click()
         }
-        expect(el.isSelected()).toBe(false);
+        expect(el.isSelected()).toBe(false)
     }
 }

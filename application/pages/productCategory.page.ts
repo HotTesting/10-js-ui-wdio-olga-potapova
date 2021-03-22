@@ -1,6 +1,6 @@
-import { ProductCardComponent } from "./components/productCard.component"
-import { SuccessMessage } from "./components/successMessage.component"
-import { TopLinks } from "./components/toplinks.component"
+import { ProductCardComponent } from './components/productCard.component'
+import { SuccessMessage } from './components/successMessage.component'
+import { TopLinks } from './components/toplinks.component'
 
 
 export class ProductCategoryPage {
