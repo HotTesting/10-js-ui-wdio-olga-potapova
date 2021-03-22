@@ -43,11 +43,12 @@ describe('Items', function () {
     it.only('can be added to wishlist', function () {
         const app = new App()
         const user = dataHelper.getUser()
+
         //app.registration.open()
-        const email = app.registration.registerViaApi()
+        app.registration.registerViaApi(user)
         browser.url('/index.php?route=account/login');
-        $('input#input-email').setValue(email);
-        $('input#input-password').setValue('123456');
+        $('input#input-email').setValue(user.email);
+        $('input#input-password').setValue(user.password);
         $('input[type="submit"]').click();
         app.home.openAllForCategory('MP3 Players')
         products.forEach(product => {

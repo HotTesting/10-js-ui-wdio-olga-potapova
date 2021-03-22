@@ -17,7 +17,7 @@ export class RegistrationPage {
         telephone: string,
         password: string
     }) {
-       
+
         const firstName = this.content.$('#input-firstname')
         expect(firstName).toBeDisplayed({
             wait: 5000,
@@ -45,9 +45,21 @@ export class RegistrationPage {
         })
     }
 
-    registerViaApi() {
+    registerViaApi(data: {
+        firstName: string,
+        lastName: string,
+        email: string,
+        telephone: string,
+        password: string,
+        agree: string,
+        newsletter: string
+    }) {
         const api = new ApiClient();
-        const email = api.registerNewUser();
-        return email;
+        const response = api.registerNewUser(data);
+        const authorizationCookieValue = response.headers.get('Set-Cookie').split('; ')[0].slice(9); //ну сорян
+        browser.setCookies({
+            name: "OCSESSID",
+            value: authorizationCookieValue
+        })
     }
 }

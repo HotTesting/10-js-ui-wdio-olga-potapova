@@ -7,7 +7,9 @@ export class DataHelper {
             lastName: faker.name.lastName(),
             email: faker.internet.email(),
             telephone: faker.phone.phoneNumber(),
-            password: faker.internet.password()
+            password: faker.internet.password(),
+            agree: '1',
+            newsletter: '0'
         }
         console.log(user)
         return user
