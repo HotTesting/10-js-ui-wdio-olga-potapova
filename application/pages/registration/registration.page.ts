@@ -1,3 +1,5 @@
+import { ApiClient } from "../../api/apiClient";
+
 export class RegistrationPage {
     private content: WebdriverIO.Element;
     constructor() {
@@ -41,5 +43,11 @@ export class RegistrationPage {
             wait: 5000,
             message: 'Success registration message isn\'t shown, probably a user isn\'t registered'
         })
+    }
+
+    registerViaApi() {
+        const api = new ApiClient();
+        const email = api.registerNewUser();
+        return email;
     }
 }

@@ -40,11 +40,15 @@ beforeEach(function () {
 })
 
 describe('Items', function () {
-    it('can be added to wishlist', function () {
+    it.only('can be added to wishlist', function () {
         const app = new App()
         const user = dataHelper.getUser()
-        app.registration.open()
-        app.registration.register(user)
+        //app.registration.open()
+        const email = app.registration.registerViaApi()
+        browser.url('/index.php?route=account/login');
+        $('input#input-email').setValue(email);
+        $('input#input-password').setValue('123456');
+        $('input[type="submit"]').click();
         app.home.openAllForCategory('MP3 Players')
         products.forEach(product => {
             const itemToAdd = app.productCategory.products.find(pr => pr.title() === product.name)

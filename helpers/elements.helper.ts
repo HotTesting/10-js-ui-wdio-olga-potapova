@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 export class ElementsHelper {
     static setSwitcherToTrue(el: WebdriverIO.Element) {
         expect(el).toBeClickable({ wait: 5000 })
