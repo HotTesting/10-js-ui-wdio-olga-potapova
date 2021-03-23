@@ -40,15 +40,10 @@ beforeEach(function () {
 })
 
 describe('Items', function () {
-    it('can be added to wishlist', function () {
+    it.only('can be added to wishlist', function () {
         const app = new App()
         const user = dataHelper.getUser()
-        app.registration.registerViaApi(user)
-        app.login.open();
-        app.login.guickLogin({
-            email: user.email,
-            password: user.password
-        })
+        app.registration.registerAndLogin(user)
         app.home.openAllForCategory('MP3 Players')
         products.forEach(product => {
             const itemToAdd = app.productCategory.products.find(pr => pr.title() === product.name)
@@ -61,10 +56,10 @@ describe('Items', function () {
         })
         app.productCategory.successMessage.openWishListFromSuccessMessage()
         expect(app.wishList.quantity).toEqual(4)
-        expect(app.wishList.prices).toEqual(products.map(product => product.discountPrice))
+        expect(app.wishList.prices).toEqual(products.map(product => product.price))
     })
 
-    it('can be selected for comparison by registered user', function () {
+    it('can be selected for comparison by returned customers (price should be discounted)', function () {
         const app = new App()
         const user = dataHelper.getUser()
         app.registration.registerViaApi(user)

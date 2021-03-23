@@ -56,7 +56,7 @@ export class RegistrationPage {
         newsletter: string
     }) {
         const api = new ApiClient();
-        const response = api.registerNewUser(data);
+        const response = api.registerNewUserViaAPI(data);
         
         /*const cookieString = response.headers.get('Set-Cookie');
         const cookiesObject = cookie.parse(cookieString);
@@ -68,5 +68,24 @@ export class RegistrationPage {
                 value: cookiesObject['OCSESSID']
             }
         ])*/
+    }
+
+    registerAndLogin(data: {
+        firstName: string,
+        lastName: string,
+        email: string,
+        telephone: string,
+        password: string,
+        agree: string,
+        newsletter: string
+    }) {
+        const api = new ApiClient();
+        api.registerAndLoginBrowserRequest(data);
+        //browser.refresh(); //whyyyyy, whyyyy it doesn't woooooork
+        //TO DO: 
+        /*
+        - browser refresh
+        - open menu and expect that user is logged in
+        */
     }
 }
