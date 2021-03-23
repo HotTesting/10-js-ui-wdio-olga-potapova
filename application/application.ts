@@ -2,6 +2,7 @@ import { ConfirmationPage } from './pages/checkout/confirmation.page'
 import { CheckoutPage } from './pages/checkout/index'
 import { CompareTable } from './pages/compareTable.page'
 import { HomePage } from './pages/home/home.page'
+import { LoginPage } from './pages/login/login.page'
 import { ProductCategoryPage } from './pages/productCategory.page'
 import { RegistrationPage } from './pages/registration/registration.page'
 import { ShoppingCart } from './pages/shoppingCart.page'
@@ -13,10 +14,11 @@ export class App {
     productCategory: ProductCategoryPage
     checkout: CheckoutPage
     confirmation: ConfirmationPage
-    registration: RegistrationPage;
-    wishList: WishList;
-    compareTable: CompareTable;
-    shoppingCart: ShoppingCart;
+    registration: RegistrationPage
+    wishList: WishList
+    compareTable: CompareTable
+    shoppingCart: ShoppingCart
+    login: LoginPage
 
     constructor() {
         this.home = new HomePage()
@@ -27,5 +29,6 @@ export class App {
         this.wishList = new WishList()
         this.compareTable = new CompareTable()
         this.shoppingCart = new ShoppingCart()
+        this.login = new LoginPage()
     }
 }

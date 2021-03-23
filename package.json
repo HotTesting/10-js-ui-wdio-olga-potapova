@@ -28,6 +28,7 @@
     "@wdio/spec-reporter": "^7.0.7",
     "@wdio/sync": "^7.0.7",
     "chromedriver": "^88.0.0",
+    "cookie": "^0.4.1",
     "eslint": "^7.22.0",
     "eslint-plugin-no-floating-promise": "^1.0.2",
     "faker": "^5.4.0",

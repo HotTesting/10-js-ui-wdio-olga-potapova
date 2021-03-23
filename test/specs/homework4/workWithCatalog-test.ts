@@ -40,16 +40,15 @@ beforeEach(function () {
 })
 
 describe('Items', function () {
-    it.only('can be added to wishlist', function () {
+    it('can be added to wishlist', function () {
         const app = new App()
         const user = dataHelper.getUser()
-
-        //app.registration.open()
         app.registration.registerViaApi(user)
-        browser.url('/index.php?route=account/login');
-        $('input#input-email').setValue(user.email);
-        $('input#input-password').setValue(user.password);
-        $('input[type="submit"]').click();
+        app.login.open();
+        app.login.guickLogin({
+            email: user.email,
+            password: user.password
+        })
         app.home.openAllForCategory('MP3 Players')
         products.forEach(product => {
             const itemToAdd = app.productCategory.products.find(pr => pr.title() === product.name)
@@ -62,14 +61,18 @@ describe('Items', function () {
         })
         app.productCategory.successMessage.openWishListFromSuccessMessage()
         expect(app.wishList.quantity).toEqual(4)
-        expect(app.wishList.prices).toEqual(products.map(product => product.price))
+        expect(app.wishList.prices).toEqual(products.map(product => product.discountPrice))
     })
 
     it('can be selected for comparison by registered user', function () {
         const app = new App()
         const user = dataHelper.getUser()
-        app.registration.open()
-        app.registration.register(user)
+        app.registration.registerViaApi(user)
+        app.login.open();
+        app.login.guickLogin({
+            email: user.email,
+            password: user.password
+        })
         app.home.openAllForCategory('MP3 Players')
         products.forEach(product => {
             const itemToAdd = app.productCategory.products.find(pr => pr.title() === product.name)
@@ -82,7 +85,7 @@ describe('Items', function () {
         })
         app.productCategory.successMessage.openCompareFromSuccessMessage()
         expect(app.compareTable.quantity).toEqual(4)
-        expect(app.compareTable.prices).toEqual(['Price', ...products.map(product => product.price)])
+        expect(app.compareTable.prices).toEqual(['Price', ...products.map(product => product.discountPrice)])
     })
 
     it('can be selected for comparison by guest', function () {
@@ -119,8 +122,12 @@ describe('Items', function () {
     products.forEach(product => it('can be added to cart by registered user', function () {
         const app = new App()
         const user = dataHelper.getUser()
-        app.registration.open()
-        app.registration.register(user)
+        app.registration.registerViaApi(user)
+        app.login.open();
+        app.login.guickLogin({
+            email: user.email,
+            password: user.password
+        })
         app.productCategory.open('/mp3-players')
         const item = app.productCategory.products.find(pr => pr.title() === product.name)
         expect(item).toBeDefined()
@@ -128,7 +135,7 @@ describe('Items', function () {
         waitHelper.waitForPageStopScrolling(/*up to*/20/*times*/, 100/*milliseconds*/)
         app.productCategory.successMessage.openCartFromSuccessMessage()
         expect(app.shoppingCart.quantity).toEqual(1)
-        expect(app.shoppingCart.prices).toEqual([product.price])
+        expect(app.shoppingCart.prices).toEqual([product.discountPrice])
         expect(app.shoppingCart.numberOfProducts).toEqual(['1'])
     })
     )

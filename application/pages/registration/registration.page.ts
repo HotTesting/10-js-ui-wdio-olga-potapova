@@ -1,4 +1,5 @@
 import { ApiClient } from "../../api/apiClient";
+//const cookie = require('cookie');
 
 export class RegistrationPage {
     private content: WebdriverIO.Element;
@@ -56,10 +57,16 @@ export class RegistrationPage {
     }) {
         const api = new ApiClient();
         const response = api.registerNewUser(data);
-        const authorizationCookieValue = response.headers.get('Set-Cookie').split('; ')[0].slice(9); //ну сорян
-        browser.setCookies({
-            name: "OCSESSID",
-            value: authorizationCookieValue
-        })
+        
+        /*const cookieString = response.headers.get('Set-Cookie');
+        const cookiesObject = cookie.parse(cookieString);
+        console.log(cookieString);
+        console.log(cookiesObject['OCSESSID'])
+        browser.setCookies([
+            {
+                name: 'OCSESSID',
+                value: cookiesObject['OCSESSID']
+            }
+        ])*/
     }
 }
