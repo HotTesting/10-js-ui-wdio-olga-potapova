@@ -1,9 +1,7 @@
 // Use http://93.126.97.71:10082/mp3-players to simplify these tests. Mp3 players does not have custom params on details page.
 import { App } from '../../../application/application'
-import { WaitHelper } from '../../../helpers/wait.helper'
 import { DataHelper } from '../../../helpers/data.helper'
 
-const waitHelper = new WaitHelper()
 const dataHelper = new DataHelper()
 
 const products = [
@@ -52,7 +50,7 @@ describe('Items', function () {
             expect(app.productCategory.successMessage.message).toHaveTextContaining('Success: You have added', {
                 message: 'Success message doesn\'t contain success text'
             })
-            waitHelper.waitForPageStopScrolling()
+            browser.waitForPageStopScrolling()
         })
         app.productCategory.successMessage.openWishListFromSuccessMessage()
         expect(app.wishList.quantity).toEqual(4)
@@ -76,7 +74,7 @@ describe('Items', function () {
             expect(app.productCategory.successMessage.message).toHaveTextContaining('Success: You have added', {
                 message: 'Success message doesn\'t contain success text'
             })
-            waitHelper.waitForPageStopScrolling()
+            browser.waitForPageStopScrolling()
         })
         app.productCategory.successMessage.openCompareFromSuccessMessage()
         expect(app.compareTable.quantity).toEqual(4)
@@ -93,7 +91,7 @@ describe('Items', function () {
             expect(app.productCategory.successMessage.message).toHaveTextContaining('Success: You have added', {
                 message: 'Success message doesn\'t contain success text'
             })
-            waitHelper.waitForPageStopScrolling()
+            browser.waitForPageStopScrolling()
         })
         app.productCategory.successMessage.openCompareFromSuccessMessage()
         expect(app.compareTable.quantity).toEqual(4)
@@ -106,7 +104,7 @@ describe('Items', function () {
         const item = app.productCategory.products.find(pr => pr.title() === product.name)
         expect(item).toBeDefined()
         item.addToCart()
-        waitHelper.waitForPageStopScrolling()
+        browser.waitForPageStopScrolling()
         app.productCategory.successMessage.openCartFromSuccessMessage()
         expect(app.shoppingCart.quantity).toEqual(1)
         expect(app.shoppingCart.prices).toEqual([product.price])
@@ -127,7 +125,7 @@ describe('Items', function () {
         const item = app.productCategory.products.find(pr => pr.title() === product.name)
         expect(item).toBeDefined()
         item.addToCart()
-        waitHelper.waitForPageStopScrolling()
+        browser.waitForPageStopScrolling()
         app.productCategory.successMessage.openCartFromSuccessMessage()
         expect(app.shoppingCart.quantity).toEqual(1)
         expect(app.shoppingCart.prices).toEqual([product.discountPrice])
