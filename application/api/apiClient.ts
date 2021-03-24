@@ -51,8 +51,8 @@ export class ApiClient {
                 "body": `------WebKitFormBoundary9cTguViKjNXHraCK\r\nContent-Disposition: form-data; name=\"customer_group_id\"\r\n\r\n1\r\n------WebKitFormBoundary9cTguViKjNXHraCK\r\nContent-Disposition: form-data; name=\"firstname\"\r\n\r\n${_data.firstName}\r\n------WebKitFormBoundary9cTguViKjNXHraCK\r\nContent-Disposition: form-data; name=\"lastname\"\r\n\r\n${_data.lastName}\r\n------WebKitFormBoundary9cTguViKjNXHraCK\r\nContent-Disposition: form-data; name=\"email\"\r\n\r\n${_data.email}\r\n------WebKitFormBoundary9cTguViKjNXHraCK\r\nContent-Disposition: form-data; name=\"telephone\"\r\n\r\n${_data.telephone}\r\n------WebKitFormBoundary9cTguViKjNXHraCK\r\nContent-Disposition: form-data; name=\"password\"\r\n\r\n${_data.password}\r\n------WebKitFormBoundary9cTguViKjNXHraCK\r\nContent-Disposition: form-data; name=\"confirm\"\r\n\r\n${_data.password}\r\n------WebKitFormBoundary9cTguViKjNXHraCK\r\nContent-Disposition: form-data; name=\"newsletter\"\r\n\r\n${_data.newsletter}\r\n------WebKitFormBoundary9cTguViKjNXHraCK\r\nContent-Disposition: form-data; name=\"agree\"\r\n\r\n${_data.agree}\r\n------WebKitFormBoundary9cTguViKjNXHraCK--\r\n`,
                 "method": "POST",
                 "credentials": "include"
-            }).then(() => {
-                _done('Everything is okay');
+            }).then(response => {
+                _done(response);
             });
         }, data)
     }
