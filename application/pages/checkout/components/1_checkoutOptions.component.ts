@@ -1,4 +1,4 @@
-import { ElementsHelper } from '../../../../helpers/elements.helper'
+import { Radio } from '../../../basicComponents/radio.component'
 
 export class CheckoutOptionsComponent {
     private get root(): WebdriverIO.Element {
@@ -6,8 +6,8 @@ export class CheckoutOptionsComponent {
     }
 
     selectCheckoutOption(option: string) {
-        const GuestOrRegisterCheckoutRadio = this.root.$(`input[type="radio"][value="${option}"]`)
-        ElementsHelper.setSwitcherToTrue(GuestOrRegisterCheckoutRadio)
+        const GuestOrRegisterCheckoutRadio = new Radio(this.root.$(`input[type="radio"][value="${option}"]`))
+        GuestOrRegisterCheckoutRadio.setToTrue()
     }
 
     continue() {

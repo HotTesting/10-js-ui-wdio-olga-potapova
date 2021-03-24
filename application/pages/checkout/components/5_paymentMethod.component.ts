@@ -1,4 +1,4 @@
-import { ElementsHelper } from '../../../../helpers/elements.helper'
+import { CheckBox } from "../../../basicComponents/checkbox.component"
 
 export class PaymentMethodComponent {
     private get root(): WebdriverIO.Element {
@@ -6,8 +6,8 @@ export class PaymentMethodComponent {
     }
     
     acceptTermsAndConditions() {
-        const checkbox = this.root.$('input[type="checkbox"][name="agree"]')
-        ElementsHelper.setSwitcherToTrue(checkbox)
+        const checkbox = new CheckBox(this.root.$('input[type="checkbox"][name="agree"]'))
+        checkbox.setToTrue()
     }
 
     continue() {
