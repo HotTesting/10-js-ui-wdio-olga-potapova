@@ -1,4 +1,4 @@
-import { TopLinks } from '../components/toplinks.component'
+import { TopLinks } from './commonPageComponents/toplinks.component'
 
 export class HomePage {
     topLinks: TopLinks = new TopLinks()

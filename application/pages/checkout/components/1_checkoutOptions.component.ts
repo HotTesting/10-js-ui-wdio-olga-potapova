@@ -1,4 +1,4 @@
-import { Radio } from '../../../basicComponents/radio.component'
+import { Radio } from '../../../elementsComponents/radio.component'
 
 export class CheckoutOptionsComponent {
     private get root(): WebdriverIO.Element {

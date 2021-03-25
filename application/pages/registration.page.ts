@@ -1,4 +1,4 @@
-import { ApiClient } from "../../api/apiClient";
+import { ApiClient } from "../api/apiClient";
 //const cookie = require('cookie');
 
 export class RegistrationPage {

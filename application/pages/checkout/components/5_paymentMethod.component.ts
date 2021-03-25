@@ -1,4 +1,4 @@
-import { CheckBox } from "../../../basicComponents/checkbox.component"
+import { CheckBox } from "../../../elementsComponents/checkbox.component"
 
 export class PaymentMethodComponent {
     private get root(): WebdriverIO.Element {
