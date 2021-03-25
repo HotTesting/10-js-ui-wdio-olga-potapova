@@ -5,6 +5,7 @@ import { HomePage } from './pages/home.page'
 import { LoginPage } from './pages/login.page'
 import { ProductCategoryPage } from './pages/productCategory/productCategory.page'
 import { RegistrationPage } from './pages/registration.page'
+import { ReturnPage } from './pages/return.page'
 import { ShoppingCart } from './pages/shoppingCart.page'
 import { WishList } from './pages/wishList.page'
 
@@ -19,6 +20,7 @@ export class App {
     compareTable: CompareTable
     shoppingCart: ShoppingCart
     login: LoginPage
+    return: ReturnPage
 
     constructor() {
         this.home = new HomePage()
@@ -30,5 +32,6 @@ export class App {
         this.compareTable = new CompareTable()
         this.shoppingCart = new ShoppingCart()
         this.login = new LoginPage()
+        this.return = new ReturnPage()
     }
 }

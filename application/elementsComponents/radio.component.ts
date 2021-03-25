@@ -8,7 +8,7 @@ export class Radio {
     }
 
     setToTrue() {
-        expect(this.radio).toBeClickable({ wait: 5000, message: 'Radio isn\'t clickable' })
+        expect(this.radio).toBeClickable({ wait: 5000, message: 'Radio isn\'t clickable. Probably invalid label text is sent' })
         expect(this.radio).toHaveAttribute('type', 'radio', { message: 'This is not a radio' })
         if(this.isChecked() == false) {
             this.radio.click()
@@ -18,7 +18,7 @@ export class Radio {
 
     setToFalse() {
         expect(this.radio).toBeClickable({ wait: 5000, message: 'Radio isn\'t clickable' })
-        expect(this.radio).toHaveAttribute('type', 'radio', { message: 'This is not a radio' })
+        expect(this.radio).toHaveAttribute('type', 'radio', { message: 'This is not a radio. Probably invalid label text is sent' })
         if(this.isChecked() == true) {
             this.radio.click()
         }
