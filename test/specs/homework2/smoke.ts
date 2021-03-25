@@ -1,39 +1,5 @@
 describe('Website', () => {
 
-  it('should open and show logo', () => {
-    browser.url('/')
-    expect($('#logo')).toBeDisplayed({
-      message: 'Logo isn\'t displayed on the page'
-    })
-  })
-
-  it('should allow to register', () => {
-    browser.deleteCookies()
-    browser.url('/index.php?route=account/register')
-    const content = $('#content')
-    const continueButton = content.$('input[type="submit"][value="Continue"]')
-    expect(continueButton).toBeDisplayed({
-        wait: 5000,
-        message: 'Continue button isn\'t shown on the page'
-    })
-    const firstName = content.$('#input-firstname')
-    firstName.setValue('Test')
-    const lastName = content.$('#input-lastname')
-    lastName.setValue('Test')
-    const email = content.$('#input-email')
-    email.setValue(`Test${Date.now()}@example.com`)
-    const phone = content.$('#input-telephone')
-    phone.setValue('111111111111111')
-    const password = content.$('#input-password')
-    password.setValue('2222')
-    const passwordConfirm = content.$('#input-confirm')
-    passwordConfirm.setValue('2222')
-    const policy = content.$('input[type="checkbox"][name="agree"]')
-    policy.click()
-    continueButton.click()
-    const heading = content.$('h1')
-    expect(heading).toHaveText('Your Account Has Been Created!')
-  })
 
   /**
   - Try to implement as much tests as you can

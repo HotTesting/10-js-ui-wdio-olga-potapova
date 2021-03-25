@@ -7,6 +7,10 @@ export class RegistrationPage {
         this.content = $('#content')
     }
 
+    get successfulMessage() : WebdriverIO.Element {
+        return this.content.$('h1')
+    }
+
     open() {
         browser.url('/index.php?route=account/register')
     }
@@ -39,11 +43,6 @@ export class RegistrationPage {
         policy.click()
         const continueButton = this.content.$('input[type="submit"][value="Continue"]')
         continueButton.click()
-        const successMessage = this.content.$('h1')
-        expect(successMessage).toHaveText('Your Account Has Been Created!', {
-            wait: 5000,
-            message: 'Success registration message isn\'t shown, probably a user isn\'t registered'
-        })
     }
 
     registerViaApi(data: {
