@@ -1,6 +1,7 @@
 import { ConfirmationPage } from './pages/checkout/confirmation.page'
 import { CheckoutPage } from './pages/checkout/index'
 import { CompareTable } from './pages/compareTable.page'
+import { ContactUsPage } from './pages/contactUs.page'
 import { GiftSertificatePage } from './pages/gift.page'
 import { HomePage } from './pages/home.page'
 import { LoginPage } from './pages/login.page'
@@ -23,6 +24,7 @@ export class App {
     login: LoginPage
     return: ReturnPage
     gift: GiftSertificatePage
+    contactUs: ContactUsPage
 
     constructor() {
         this.home = new HomePage()
@@ -36,5 +38,6 @@ export class App {
         this.login = new LoginPage()
         this.return = new ReturnPage()
         this.gift = new GiftSertificatePage()
+        this.contactUs = new ContactUsPage()
     }
 }
