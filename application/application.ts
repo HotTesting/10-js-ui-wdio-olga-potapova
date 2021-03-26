@@ -8,6 +8,7 @@ import { LoginPage } from './pages/login.page'
 import { ProductCategoryPage } from './pages/productCategory/productCategory.page'
 import { RegistrationPage } from './pages/registration.page'
 import { ReturnPage } from './pages/return.page'
+import { SearchPage } from './pages/search.page'
 import { ShoppingCart } from './pages/shoppingCart.page'
 import { WishList } from './pages/wishList.page'
 
@@ -25,6 +26,7 @@ export class App {
     return: ReturnPage
     gift: GiftSertificatePage
     contactUs: ContactUsPage
+    search: SearchPage
 
     constructor() {
         this.home = new HomePage()
@@ -39,5 +41,6 @@ export class App {
         this.return = new ReturnPage()
         this.gift = new GiftSertificatePage()
         this.contactUs = new ContactUsPage()
+        this.search = new SearchPage()
     }
 }

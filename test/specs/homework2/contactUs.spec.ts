@@ -17,6 +17,7 @@ describe('Contact us form', function () {
             enquiry: 'Some message'
         })
         app.contactUs.submit()
+        app.contactUs.continue()
         expect(browser).toHaveUrlContaining('route=common/home')
     })
 })
