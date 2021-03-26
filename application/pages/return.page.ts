@@ -11,8 +11,8 @@ export class ReturnPage {
     }
 
     fillUserInformation(user: {
-        firstname: string,
-        lastname: string,
+        firstName: string,
+        lastName: string,
         email: string,
         telephone: string,
     }) {
@@ -20,9 +20,9 @@ export class ReturnPage {
         expect(firstName).toBeVisible({
             message: 'First name input wasn\'t displayed'
         })
-        firstName.setValue(user.firstname)
+        firstName.setValue(user.firstName)
         const lastName = this.content.$('#input-lastname')
-        lastName.setValue(user.lastname)
+        lastName.setValue(user.lastName)
         const email = this.content.$('#input-email')
         email.setValue(user.email)
         const phone = this.content.$('#input-telephone')

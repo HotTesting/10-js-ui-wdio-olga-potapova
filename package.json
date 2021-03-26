@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/StartITProtractorJS/10-js-ui-wdio-olga-potapova#readme",
   "dependencies": {
+    "@types/faker": "^5.1.7",
     "@wdio/cli": "^7.0.7",
     "eslint-plugin-webdriverio": "^1.0.1"
   },

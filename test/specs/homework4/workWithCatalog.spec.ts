@@ -1,4 +1,3 @@
-// Use http://93.126.97.71:10082/mp3-players to simplify these tests. Mp3 players does not have custom params on details page.
 import { App } from '../../../application/application'
 import { DataHelper } from '../../../helpers/data.helper'
 

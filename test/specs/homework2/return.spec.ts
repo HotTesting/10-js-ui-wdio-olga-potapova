@@ -1,8 +1,6 @@
 import { App } from "../../../application/application"
 import { DataHelper } from '../../../helpers/data.helper'
 
-const dataHelper = new DataHelper()
-
 beforeEach(function () {
     browser.deleteCookies()
 })
@@ -10,22 +8,16 @@ beforeEach(function () {
 describe('Product return', function () {
     it('can be submited', function () {
         const app = new App()
+        const dataHelper = new DataHelper()
         const user = dataHelper.getUser()
         app.return.open()
-        app.return.fillUserInformation(
-            {
-                firstname: 'string',
-                lastname: 'string',
-                email: 'string@example.com',
-                telephone: 'string',
-            }
-        )
+        app.return.fillUserInformation(user)
         app.return.fillOrderInformation({
             ID: '1111',
         })
         app.return.fillProductInformation({
-            name: 'test',
-            code: 'test',
+            name: 'Product',
+            code: '123',
             reasonForReturned: 'Faulty, please supply details',
             isOpened: 'Yes'
         })
