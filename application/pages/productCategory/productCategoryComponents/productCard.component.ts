@@ -9,19 +9,25 @@ export class ProductCardComponent {
 
     addToCart() {
         const addButton = this.root.$('button[onclick*="cart.add"]')
-        expect(addButton).toBeVisible() //toBeVisible запускает 3секундное ожидание элемента
+        expect(addButton).toBeVisible()
         addButton.click()
     };
 
     addToWishList() {
         const addToWishListButton = this.root.$('button[onclick*="wishlist.add"]')
-        expect(addToWishListButton).toBeVisible() //toBeVisible запускает 3секундное ожидание элемента
+        expect(addToWishListButton).toBeVisible()
         addToWishListButton.click()
     }
 
     compareThisProduct() {
         const addToCompareButton = this.root.$('button[onclick*="compare.add"]')
-        expect(addToCompareButton).toBeVisible() //toBeVisible запускает 3секундное ожидание элемента
+        expect(addToCompareButton).toBeVisible()
         addToCompareButton.click()
+    }
+
+    openDetails(){
+        const linkToDetails = this.root.$('h4 a')
+        expect(linkToDetails).toBeVisible()
+        linkToDetails.click()
     }
 }

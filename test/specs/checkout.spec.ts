@@ -1,5 +1,5 @@
 const faker = require('faker')
-import { App } from '../../../application/application'
+import { App } from '../../application/application'
 
 beforeEach(function () {
     browser.deleteCookies()
@@ -69,7 +69,7 @@ describe('Item', function () {
         })
     })
 
-    it('can be purchased by guest with different billing address', function () {
+    it.only('can be purchased by guest with different billing address', function () {
         const app = new App()
         app.home.openAllForCategory('MP3 Players')
         const iPodShuffle = app.productCategory.products.find(product => product.title() === 'iPod Shuffle')

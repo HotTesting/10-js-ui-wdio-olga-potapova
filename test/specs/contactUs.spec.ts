@@ -1,5 +1,5 @@
-import { App } from "../../../application/application"
-import { DataHelper } from '../../../helpers/data.helper'
+import { App } from "../../application/application"
+import { DataHelper } from '../../helpers/data.helper'
 
 beforeEach(function () {
     browser.deleteCookies()

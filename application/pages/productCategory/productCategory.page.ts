@@ -1,5 +1,5 @@
 import { ProductCardComponent } from './productCategoryComponents/productCard.component'
-import { SuccessMessage } from './productCategoryComponents/successMessage.component'
+import { SuccessMessage } from '../commonPageComponents/successMessage.component'
 import { TopLinks } from '../commonPageComponents/toplinks.component'
 
 

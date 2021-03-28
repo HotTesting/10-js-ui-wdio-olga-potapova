@@ -1,5 +1,5 @@
-import { App } from '../../../application/application'
-import { DataHelper } from '../../../helpers/data.helper'
+import { App } from '../../application/application'
+import { DataHelper } from '../../helpers/data.helper'
 
 const dataHelper = new DataHelper()
 
@@ -131,4 +131,45 @@ describe('Items', function () {
         expect(app.shoppingCart.numberOfProducts).toEqual(['1'])
     })
     )
+
+    it('should add to the cart item from details', function () {
+        const app = new App()
+        app.productCategory.open('/camera')
+        const item = app.productCategory.products.find(pr => pr.title() === 'Canon EOS 5D')
+        expect(item).toBeDefined()
+        item.openDetails()
+        app.productDetails.selectOptionFromSelector('Blue')
+        app.productDetails.enterQuantity('2')
+        app.productDetails.addToCart()
+        browser.waitForPageStopScrolling()
+        expect(app.productDetails.successMessage.message).toHaveTextContaining('Success: You have added Canon EOS 5D to your shopping cart!')
+        app.productDetails.successMessage.openCartFromSuccessMessage()
+        expect(app.shoppingCart.quantity).toEqual(1)
+        expect(app.shoppingCart.prices).toEqual(['$98.00'])
+        expect(app.shoppingCart.numberOfProducts).toEqual(['2'])
+    })
+
+    it('should add to the cart item with full set of options', function () {
+        const app = new App()
+        app.productCategory.open('/component/monitor')
+        const item = app.productCategory.products.find(pr => pr.title() === 'Apple Cinema 30"')
+        expect(item).toBeDefined()
+        item.openDetails()
+        app.productDetails.selectOptionFromCheckboxes('Checkbox 1')
+        app.productDetails.selectOptionFromRadios('Medium (+$24.00)')
+        app.productDetails.productParameters.appleCinema30.typeText('Test')
+        app.productDetails.selectOptionFromSelector('Blue (+$3.60)')
+        app.productDetails.productParameters.appleCinema30.typeTextArea('Test')
+        app.productDetails.productParameters.appleCinema30.chooseDate('2021-03-25')
+        app.productDetails.productParameters.appleCinema30.chooseTime('14:00')
+        app.productDetails.productParameters.appleCinema30.chooseDateAndTime('2022-03-25 12:00')
+        app.productDetails.enterQuantity('2')
+        app.productDetails.addToCart()
+        browser.waitForPageStopScrolling()
+        expect(app.productDetails.successMessage.message).toHaveTextContaining('Success: You have added')
+        app.productDetails.successMessage.openCartFromSuccessMessage()
+        expect(app.shoppingCart.quantity).toEqual(1)
+        expect(app.shoppingCart.prices).toEqual(["$149.60"])
+        expect(app.shoppingCart.numberOfProducts).toEqual(['2'])
+    })
 })

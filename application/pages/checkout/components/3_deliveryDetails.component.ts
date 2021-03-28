@@ -29,7 +29,7 @@ export class deliveryDetails {
         this.root.$('#input-shipping-city').setValue(data.city)
         this.root.$('#input-shipping-postcode').setValue(data.postCode)
         this.root.$('#input-shipping-country').selectByVisibleText(data.country)
-        browser.pause(500)
+        expect(this.root.$('#input-shipping-zone').$(`option*=${data.region}`)).toBeExisting()
         this.root.$('#input-shipping-zone').selectByVisibleText(data.region)
     }
 

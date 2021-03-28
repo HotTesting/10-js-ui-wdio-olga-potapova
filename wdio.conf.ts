@@ -20,8 +20,8 @@ exports.config = {
     //
     specs: [
         './test/specs/homework2/**/*.ts',
-        //'./test/specs/homework4/**/*.ts',
-        //'./test/specs/homework6/**/*.ts',
+        './test/specs/homework4/**/*.ts',
+        './test/specs/homework6/**/*.ts',
     ],
     // Patterns to exclude.
     exclude: [

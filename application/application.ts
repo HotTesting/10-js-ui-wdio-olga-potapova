@@ -6,6 +6,7 @@ import { GiftSertificatePage } from './pages/gift.page'
 import { HomePage } from './pages/home.page'
 import { LoginPage } from './pages/login.page'
 import { ProductCategoryPage } from './pages/productCategory/productCategory.page'
+import { ProductDetailsPage } from './pages/productDetails/productDetails.page'
 import { RegistrationPage } from './pages/registration.page'
 import { ReturnPage } from './pages/return.page'
 import { SearchPage } from './pages/search.page'
@@ -27,6 +28,7 @@ export class App {
     gift: GiftSertificatePage
     contactUs: ContactUsPage
     search: SearchPage
+    productDetails: ProductDetailsPage
 
     constructor() {
         this.home = new HomePage()
@@ -42,5 +44,6 @@ export class App {
         this.gift = new GiftSertificatePage()
         this.contactUs = new ContactUsPage()
         this.search = new SearchPage()
+        this.productDetails = new ProductDetailsPage()
     }
 }
